@@ -566,7 +566,9 @@ class DeviceControlScreen extends StatefulWidget {
       _DeviceControlScreenState();
 }
 
-class _DeviceControlScreenState extends State<DeviceControlScreen> {
+class _DeviceControlScreenState
+    extends State<DeviceControlScreen> {
+
   Future<void> renameRelay(int index) async {
     final controller = TextEditingController(
       text: widget.device.relayNames[index],
@@ -575,9 +577,10 @@ class _DeviceControlScreenState extends State<DeviceControlScreen> {
     await showDialog(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: Text('Rename Switch ${index + 1}'),
+        title: Text('Rename Relay ${index + 1}'),
         content: TextField(
           controller: controller,
+          autofocus: true,
           decoration: const InputDecoration(
             labelText: 'Relay name',
             hintText: 'Example: Main Light',
@@ -620,11 +623,13 @@ class _DeviceControlScreenState extends State<DeviceControlScreen> {
         ),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(dialogContext, false),
+            onPressed: () =>
+                Navigator.pop(dialogContext, false),
             child: const Text('Cancel'),
           ),
           FilledButton(
-            onPressed: () => Navigator.pop(dialogContext, true),
+            onPressed: () =>
+                Navigator.pop(dialogContext, true),
             child: const Text('Delete'),
           ),
         ],
@@ -637,9 +642,24 @@ class _DeviceControlScreenState extends State<DeviceControlScreen> {
     }
   }
 
+  IconData relayIcon(String name) {
+    final value = name.toLowerCase();
+
+    if (value.contains('fan')) return Icons.toys_outlined;
+    if (value.contains('light')) return Icons.lightbulb_outline;
+    if (value.contains('socket')) return Icons.power_outlined;
+    if (value.contains('tv')) return Icons.tv_outlined;
+    if (value.contains('motor')) return Icons.settings_outlined;
+
+    return Icons.electrical_services_outlined;
+  }
+
   @override
   Widget build(BuildContext context) {
     final device = widget.device;
+
+    final activeCount =
+        device.relayStates.where((state) => state).length;
 
     return Scaffold(
       appBar: AppBar(
@@ -652,67 +672,172 @@ class _DeviceControlScreenState extends State<DeviceControlScreen> {
           ),
         ],
       ),
+
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
+
+          // DEVICE INFORMATION
+
           Card(
             child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Row(
+              padding: const EdgeInsets.all(18),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Icon(Icons.wifi_off, color: Colors.orange),
-                  const SizedBox(width: 12),
-                  const Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Not paired',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                  Row(
+                    children: [
+                      const Icon(
+                        Icons.power,
+                        size: 34,
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment:
+                              CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '${device.gangCount}-Gang Smart Switch',
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const Text(
+                              'Hardware not connected',
+                              style: TextStyle(
+                                color: Colors.orange,
+                              ),
+                            ),
+                          ],
                         ),
-                        Text(
-                          'Hardware connection is not configured',
+                      ),
+                    ],
+                  ),
+
+                  const Divider(height: 28),
+
+                  Row(
+                    mainAxisAlignment:
+                        MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text('Connection'),
+                      Chip(
+                        avatar: const Icon(
+                          Icons.wifi_off,
+                          size: 16,
                         ),
-                      ],
+                        label: const Text('Not paired'),
+                        backgroundColor:
+                            Colors.orange.withValues(alpha: 0.15),
+                      ),
+                    ],
+                  ),
+
+                  const SizedBox(height: 8),
+
+                  Text(
+                    '$activeCount of ${device.gangCount} relays ON',
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
                     ),
+                  ),
+
+                  const SizedBox(height: 8),
+
+                  LinearProgressIndicator(
+                    value: activeCount / device.gangCount,
+                    minHeight: 7,
+                    borderRadius: BorderRadius.circular(10),
                   ),
                 ],
               ),
             ),
           ),
-          const SizedBox(height: 20),
+
+          const SizedBox(height: 24),
+
+          // RELAY HEADING
+
           const Text(
-            'Relay Controls',
+            'Individual Relay Controls',
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
           ),
+
           const SizedBox(height: 12),
+
+          // RELAY CARDS
+
           ...List.generate(device.gangCount, (index) {
+
             final isOn = device.relayStates[index];
+            final relayName = device.relayNames[index];
 
             return Card(
-              child: ListTile(
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 8,
-                ),
-                leading: Icon(
-                  isOn ? Icons.lightbulb : Icons.lightbulb_outline,
-                  color: isOn ? Colors.amber : null,
-                  size: 30,
-                ),
-                title: Text(device.relayNames[index]),
-                subtitle: Text(isOn ? 'ON' : 'OFF'),
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
+              margin: const EdgeInsets.only(bottom: 12),
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Row(
                   children: [
+
+                    Container(
+                      width: 52,
+                      height: 52,
+                      decoration: BoxDecoration(
+                        color: isOn
+                            ? Colors.amber.withValues(alpha: 0.15)
+                            : Colors.grey.withValues(alpha: 0.15),
+                        borderRadius:
+                            BorderRadius.circular(14),
+                      ),
+                      child: Icon(
+                        relayIcon(relayName),
+                        size: 28,
+                        color: isOn
+                            ? Colors.amber
+                            : Colors.grey,
+                      ),
+                    ),
+
+                    const SizedBox(width: 14),
+
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment:
+                            CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            relayName,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 5),
+                          Text(
+                            'Relay ${index + 1} • '
+                            '${isOn ? "ON" : "OFF"}',
+                            style: TextStyle(
+                              color: isOn
+                                  ? Colors.green
+                                  : Colors.grey,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
                     IconButton(
                       tooltip: 'Rename relay',
                       onPressed: () => renameRelay(index),
                       icon: const Icon(Icons.edit_outlined),
                     ),
+
                     Switch(
                       value: isOn,
                       onChanged: (value) {
@@ -728,11 +853,36 @@ class _DeviceControlScreenState extends State<DeviceControlScreen> {
               ),
             );
           }),
+
           const SizedBox(height: 16),
-          const Text(
-            'Demo mode: These controls update the app locally. '
-            'They do not send commands to a physical switch.',
-            style: TextStyle(color: Colors.orange),
+
+          // DEMO MODE WARNING
+
+          Card(
+            color: Colors.orange.withValues(alpha: 0.10),
+            child: const Padding(
+              padding: EdgeInsets.all(16),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(
+                    Icons.info_outline,
+                    color: Colors.orange,
+                  ),
+                  SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      'Simulation mode\n\n'
+                      'Relay controls currently update '
+                      'the application locally. No commands '
+                      'are sent to physical Vaalmo switches. '
+                      'The displayed states are not '
+                      'hardware-confirmed.',
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
         ],
       ),

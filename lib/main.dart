@@ -1,3 +1,4 @@
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -33,6 +34,55 @@ class VaalmoApp extends StatelessWidget {
 }
 
 // ============================================================
+// REUSABLE TEXT DIALOG
+// ============================================================
+
+Future<String?> showNameDialog({
+  required BuildContext context,
+  required String title,
+  required String label,
+  String initialValue = '',
+  String buttonText = 'Save',
+}) async {
+  String enteredName = initialValue;
+
+  return showDialog<String>(
+    context: context,
+    builder: (dialogContext) {
+      return AlertDialog(
+        title: Text(title),
+        content: TextFormField(
+          initialValue: initialValue,
+          autofocus: true,
+          decoration: InputDecoration(
+            labelText: label,
+            border: const OutlineInputBorder(),
+          ),
+          onChanged: (value) {
+            enteredName = value.trim();
+          },
+          onFieldSubmitted: (value) {
+            Navigator.pop(dialogContext, value.trim());
+          },
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext),
+            child: const Text('Cancel'),
+          ),
+          FilledButton(
+            onPressed: () {
+              Navigator.pop(dialogContext, enteredName);
+            },
+            child: Text(buttonText),
+          ),
+        ],
+      );
+    },
+  );
+}
+
+// ============================================================
 // MODELS
 // ============================================================
 
@@ -62,33 +112,54 @@ class VaalmoHome {
   }
 }
 
+// ============================================================
+// SMART DEVICE MODEL
+// ============================================================
+
 class SmartDevice {
   String id;
+  String deviceUid;
   String name;
   String homeId;
   String roomName;
   int gangCount;
+
   List<String> relayNames;
   List<bool> relayStates;
 
+  String deviceType;
+  String connectionStatus;
+  String firmwareVersion;
+  String? lastSeen;
+
   SmartDevice({
     required this.id,
+    required this.deviceUid,
     required this.name,
     required this.homeId,
     required this.roomName,
     required this.gangCount,
     required this.relayNames,
     required this.relayStates,
+    this.deviceType = 'Wi-Fi Smart Switch',
+    this.connectionStatus = 'Not Connected',
+    this.firmwareVersion = 'Unknown',
+    this.lastSeen,
   });
 
   Map<String, dynamic> toJson() => {
         'id': id,
+        'deviceUid': deviceUid,
         'name': name,
         'homeId': homeId,
         'roomName': roomName,
         'gangCount': gangCount,
         'relayNames': relayNames,
         'relayStates': relayStates,
+        'deviceType': deviceType,
+        'connectionStatus': connectionStatus,
+        'firmwareVersion': firmwareVersion,
+        'lastSeen': lastSeen,
       };
 
   factory SmartDevice.fromJson(Map<String, dynamic> json) {
@@ -106,14 +177,24 @@ class SmartDevice {
       states.add(false);
     }
 
+    final internalId = json['id']?.toString() ?? '';
+
     return SmartDevice(
-      id: json['id']?.toString() ?? '',
+      id: internalId,
+      deviceUid: json['deviceUid']?.toString() ?? 'VAALMO-$internalId',
       name: json['name']?.toString() ?? 'Switch',
       homeId: json['homeId']?.toString() ?? '',
       roomName: json['roomName']?.toString() ?? '',
       gangCount: safeCount,
       relayNames: names.take(safeCount).toList(),
       relayStates: states.take(safeCount).toList(),
+      deviceType:
+          json['deviceType']?.toString() ?? 'Wi-Fi Smart Switch',
+      connectionStatus:
+          json['connectionStatus']?.toString() ?? 'Not Connected',
+      firmwareVersion:
+          json['firmwareVersion']?.toString() ?? 'Unknown',
+      lastSeen: json['lastSeen']?.toString(),
     );
   }
 }
@@ -188,8 +269,8 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     }
 
-    // Remove empty or duplicate home IDs.
     final usedIds = <String>{};
+
     loadedHomes.removeWhere((home) {
       if (home.id.isEmpty || usedIds.contains(home.id)) {
         return true;
@@ -198,7 +279,6 @@ class _HomeScreenState extends State<HomeScreen> {
       return false;
     });
 
-    // Migrate previous single-home data if no multi-home data exists.
     if (loadedHomes.isEmpty) {
       final oldHomeName = prefs.getString('homeName');
       final oldRooms = prefs.getStringList('rooms') ?? [];
@@ -218,7 +298,6 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     }
 
-    // Repair devices with an empty home ID when only one home exists.
     if (loadedHomes.length == 1) {
       for (final device in loadedDevices) {
         if (device.homeId.isEmpty) {
@@ -280,38 +359,14 @@ class _HomeScreenState extends State<HomeScreen> {
   // ------------------------------------------------------------
 
   Future<void> createHome() async {
-    final controller = TextEditingController();
-
-    final name = await showDialog<String>(
+    final name = await showNameDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Add New Home'),
-        content: TextField(
-          controller: controller,
-          autofocus: true,
-          decoration: const InputDecoration(
-            labelText: 'Home name',
-            hintText: 'e.g. My House',
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
-          FilledButton(
-            onPressed: () {
-              Navigator.pop(context, controller.text.trim());
-            },
-            child: const Text('Create'),
-          ),
-        ],
-      ),
+      title: 'Add New Home',
+      label: 'Home name',
+      buttonText: 'Create',
     );
 
-    controller.dispose();
-
-    if (name == null || name.isEmpty) return;
+    if (!mounted || name == null || name.isEmpty) return;
 
     final newHome = VaalmoHome(
       id: createId(),
@@ -331,35 +386,14 @@ class _HomeScreenState extends State<HomeScreen> {
   // ------------------------------------------------------------
 
   Future<void> renameHome(VaalmoHome home) async {
-    final controller = TextEditingController(text: home.name);
-
-    final name = await showDialog<String>(
+    final name = await showNameDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Rename Home'),
-        content: TextField(
-          controller: controller,
-          autofocus: true,
-          decoration: const InputDecoration(labelText: 'Home name'),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
-          FilledButton(
-            onPressed: () {
-              Navigator.pop(context, controller.text.trim());
-            },
-            child: const Text('Save'),
-          ),
-        ],
-      ),
+      title: 'Rename Home',
+      label: 'Home name',
+      initialValue: home.name,
     );
 
-    controller.dispose();
-
-    if (name == null || name.isEmpty) return;
+    if (!mounted || name == null || name.isEmpty) return;
 
     setState(() {
       home.name = name;
@@ -375,26 +409,26 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> deleteHome(VaalmoHome home) async {
     final confirm = await showDialog<bool>(
       context: context,
-      builder: (context) => AlertDialog(
+      builder: (dialogContext) => AlertDialog(
         title: const Text('Delete Home?'),
         content: Text(
           'Delete "${home.name}" and all its rooms and devices?',
         ),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(context, false),
+            onPressed: () => Navigator.pop(dialogContext, false),
             child: const Text('Cancel'),
           ),
           FilledButton(
             style: FilledButton.styleFrom(backgroundColor: Colors.red),
-            onPressed: () => Navigator.pop(context, true),
+            onPressed: () => Navigator.pop(dialogContext, true),
             child: const Text('Delete'),
           ),
         ],
       ),
     );
 
-    if (confirm != true) return;
+    if (confirm != true || !mounted) return;
 
     setState(() {
       homes.removeWhere((item) => item.id == home.id);
@@ -416,43 +450,18 @@ class _HomeScreenState extends State<HomeScreen> {
     final home = selectedHome;
     if (home == null) return;
 
-    final controller = TextEditingController();
-
-    final roomName = await showDialog<String>(
+    final roomName = await showNameDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Add Room'),
-        content: TextField(
-          controller: controller,
-          autofocus: true,
-          decoration: const InputDecoration(
-            labelText: 'Room name',
-            hintText: 'e.g. Living Room',
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
-          FilledButton(
-            onPressed: () {
-              Navigator.pop(context, controller.text.trim());
-            },
-            child: const Text('Add'),
-          ),
-        ],
-      ),
+      title: 'Add Room',
+      label: 'Room name',
+      buttonText: 'Add',
     );
 
-    controller.dispose();
-
-    if (roomName == null || roomName.isEmpty) return;
+    if (!mounted || roomName == null || roomName.isEmpty) return;
 
     if (home.rooms.any(
       (room) => room.toLowerCase() == roomName.toLowerCase(),
     )) {
-      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Room already exists')),
       );
@@ -474,42 +483,23 @@ class _HomeScreenState extends State<HomeScreen> {
     final home = selectedHome;
     if (home == null) return;
 
-    final controller = TextEditingController(text: oldName);
-
-    final newName = await showDialog<String>(
+    final newName = await showNameDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Rename Room'),
-        content: TextField(
-          controller: controller,
-          autofocus: true,
-          decoration: const InputDecoration(labelText: 'Room name'),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
-          FilledButton(
-            onPressed: () {
-              Navigator.pop(context, controller.text.trim());
-            },
-            child: const Text('Save'),
-          ),
-        ],
-      ),
+      title: 'Rename Room',
+      label: 'Room name',
+      initialValue: oldName,
     );
 
-    controller.dispose();
-
-    if (newName == null || newName.isEmpty || newName == oldName) {
+    if (!mounted ||
+        newName == null ||
+        newName.isEmpty ||
+        newName == oldName) {
       return;
     }
 
     if (home.rooms.any(
       (room) => room.toLowerCase() == newName.toLowerCase(),
     )) {
-      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Room already exists')),
       );
@@ -518,6 +508,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     setState(() {
       final index = home.rooms.indexOf(oldName);
+
       if (index != -1) {
         home.rooms[index] = newName;
       }
@@ -542,27 +533,28 @@ class _HomeScreenState extends State<HomeScreen> {
 
     final confirm = await showDialog<bool>(
       context: context,
-      builder: (context) => AlertDialog(
+      builder: (dialogContext) => AlertDialog(
         title: const Text('Delete Room?'),
         content: Text('Delete "$roomName" and all devices inside it?'),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(context, false),
+            onPressed: () => Navigator.pop(dialogContext, false),
             child: const Text('Cancel'),
           ),
           FilledButton(
             style: FilledButton.styleFrom(backgroundColor: Colors.red),
-            onPressed: () => Navigator.pop(context, true),
+            onPressed: () => Navigator.pop(dialogContext, true),
             child: const Text('Delete'),
           ),
         ],
       ),
     );
 
-    if (confirm != true) return;
+    if (confirm != true || !mounted) return;
 
     setState(() {
       home.rooms.remove(roomName);
+
       devices.removeWhere(
         (device) =>
             device.homeId == home.id && device.roomName == roomName,
@@ -580,6 +572,7 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       devices.add(device);
     });
+
     await saveData();
   }
 
@@ -601,6 +594,7 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       devices.removeWhere((device) => device.id == deviceId);
     });
+
     await saveData();
   }
 
@@ -706,14 +700,12 @@ class _HomeScreenState extends State<HomeScreen> {
           sum + device.relayStates.where((state) => state).length,
     );
 
-    // The home list is validated during loading, so IDs are unique.
     final dropdownValue = homes.any((item) => item.id == selectedHomeId)
         ? selectedHomeId
         : homes.first.id;
 
     return Column(
       children: [
-        // HOME SELECTOR
         Padding(
           padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
           child: Row(
@@ -752,8 +744,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
-
-        // HOME SUMMARY
         Card(
           margin: const EdgeInsets.all(16),
           child: Padding(
@@ -782,8 +772,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
-
-        // RELAY SUMMARY
         Card(
           margin: const EdgeInsets.symmetric(horizontal: 16),
           child: Padding(
@@ -813,8 +801,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
-
-        // ROOM LIST
         Expanded(
           child: home.rooms.isEmpty
               ? _buildEmptyRooms()
@@ -1072,9 +1058,20 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
                     title: Text(device.name),
                     subtitle: Text(
                       '${device.gangCount} gang • '
-                      '$activeCount relays ON',
+                      '$activeCount relays ON\n'
+                      '${device.deviceUid}',
                     ),
-                    trailing: const Icon(Icons.chevron_right),
+                    isThreeLine: true,
+                    trailing: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(Icons.chevron_right),
+                        Text(
+                          device.connectionStatus,
+                          style: const TextStyle(fontSize: 10),
+                        ),
+                      ],
+                    ),
                     onTap: () => openDevice(device),
                   ),
                 );
@@ -1127,8 +1124,11 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
       return;
     }
 
+    final id = DateTime.now().microsecondsSinceEpoch.toString();
+
     final device = SmartDevice(
-      id: DateTime.now().microsecondsSinceEpoch.toString(),
+      id: id,
+      deviceUid: 'VAALMO-$id',
       name: name,
       homeId: widget.homeId,
       roomName: widget.roomName,
@@ -1238,35 +1238,14 @@ class _DeviceControlScreenState extends State<DeviceControlScreen> {
   // ------------------------------------------------------------
 
   Future<void> renameSwitch() async {
-    final controller = TextEditingController(text: device.name);
-
-    final name = await showDialog<String>(
+    final name = await showNameDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Rename Switch'),
-        content: TextField(
-          controller: controller,
-          autofocus: true,
-          decoration: const InputDecoration(labelText: 'Switch name'),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
-          FilledButton(
-            onPressed: () {
-              Navigator.pop(context, controller.text.trim());
-            },
-            child: const Text('Save'),
-          ),
-        ],
-      ),
+      title: 'Rename Switch',
+      label: 'Switch name',
+      initialValue: device.name,
     );
 
-    controller.dispose();
-
-    if (name == null || name.isEmpty) return;
+    if (!mounted || name == null || name.isEmpty) return;
 
     setState(() {
       device.name = name;
@@ -1280,37 +1259,14 @@ class _DeviceControlScreenState extends State<DeviceControlScreen> {
   // ------------------------------------------------------------
 
   Future<void> renameRelay(int index) async {
-    final controller = TextEditingController(
-      text: device.relayNames[index],
-    );
-
-    final name = await showDialog<String>(
+    final name = await showNameDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Rename ${device.relayNames[index]}'),
-        content: TextField(
-          controller: controller,
-          autofocus: true,
-          decoration: const InputDecoration(labelText: 'Relay name'),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
-          FilledButton(
-            onPressed: () {
-              Navigator.pop(context, controller.text.trim());
-            },
-            child: const Text('Save'),
-          ),
-        ],
-      ),
+      title: 'Rename ${device.relayNames[index]}',
+      label: 'Relay name',
+      initialValue: device.relayNames[index],
     );
 
-    controller.dispose();
-
-    if (name == null || name.isEmpty) return;
+    if (!mounted || name == null || name.isEmpty) return;
 
     setState(() {
       device.relayNames[index] = name;
@@ -1338,17 +1294,17 @@ class _DeviceControlScreenState extends State<DeviceControlScreen> {
   Future<void> deleteSwitch() async {
     final confirm = await showDialog<bool>(
       context: context,
-      builder: (context) => AlertDialog(
+      builder: (dialogContext) => AlertDialog(
         title: const Text('Delete Switch?'),
         content: Text('Delete "${device.name}"?'),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(context, false),
+            onPressed: () => Navigator.pop(dialogContext, false),
             child: const Text('Cancel'),
           ),
           FilledButton(
             style: FilledButton.styleFrom(backgroundColor: Colors.red),
-            onPressed: () => Navigator.pop(context, true),
+            onPressed: () => Navigator.pop(dialogContext, true),
             child: const Text('Delete'),
           ),
         ],
@@ -1357,9 +1313,35 @@ class _DeviceControlScreenState extends State<DeviceControlScreen> {
 
     if (confirm != true || !mounted) return;
 
-    // Return the device ID to RoomDetailsScreen, which deletes it
-    // through the HomeScreen callback.
     Navigator.pop(context, device.id);
+  }
+
+  // ------------------------------------------------------------
+  // DEVICE SETTINGS
+  // ------------------------------------------------------------
+
+  Future<void> openDeviceSettings() async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => DeviceSettingsScreen(
+          device: device,
+          onUpdate: (updatedDevice) async {
+            if (!mounted) return;
+
+            setState(() {
+              device = updatedDevice;
+            });
+
+            await persist();
+          },
+        ),
+      ),
+    );
+
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   // ------------------------------------------------------------
@@ -1375,6 +1357,11 @@ class _DeviceControlScreenState extends State<DeviceControlScreen> {
       appBar: AppBar(
         title: Text(device.name),
         actions: [
+          IconButton(
+            tooltip: 'Device Settings',
+            icon: const Icon(Icons.settings_outlined),
+            onPressed: openDeviceSettings,
+          ),
           PopupMenuButton<String>(
             onSelected: (value) {
               if (value == 'rename') {
@@ -1399,7 +1386,6 @@ class _DeviceControlScreenState extends State<DeviceControlScreen> {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          // SUMMARY
           Card(
             child: Padding(
               padding: const EdgeInsets.all(20),
@@ -1432,10 +1418,7 @@ class _DeviceControlScreenState extends State<DeviceControlScreen> {
               ),
             ),
           ),
-
           const SizedBox(height: 16),
-
-          // RELAY CONTROLS
           ...List.generate(device.gangCount, (index) {
             final isOn = device.relayStates[index];
 
@@ -1495,10 +1478,7 @@ class _DeviceControlScreenState extends State<DeviceControlScreen> {
               ),
             );
           }),
-
           const SizedBox(height: 16),
-
-          // SIMULATION NOTICE
           Card(
             color: Colors.orange.withOpacity(0.12),
             child: const Padding(
@@ -1513,6 +1493,232 @@ class _DeviceControlScreenState extends State<DeviceControlScreen> {
                       'Simulation Mode\n'
                       'These relay controls currently operate locally '
                       'inside the app. No physical switch is connected yet.',
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ============================================================
+// DEVICE SETTINGS SCREEN
+// ============================================================
+
+class DeviceSettingsScreen extends StatefulWidget {
+  final SmartDevice device;
+  final Future<void> Function(SmartDevice) onUpdate;
+
+  const DeviceSettingsScreen({
+    super.key,
+    required this.device,
+    required this.onUpdate,
+  });
+
+  @override
+  State<DeviceSettingsScreen> createState() =>
+      _DeviceSettingsScreenState();
+}
+
+class _DeviceSettingsScreenState extends State<DeviceSettingsScreen> {
+  late SmartDevice device;
+
+  @override
+  void initState() {
+    super.initState();
+    device = widget.device;
+  }
+
+  Future<void> updateDevice() async {
+    await widget.onUpdate(device);
+
+    if (!mounted) return;
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Device information saved')),
+    );
+  }
+
+  // ------------------------------------------------------------
+  // RENAME DEVICE - FIXED
+  // ------------------------------------------------------------
+
+  Future<void> renameDevice() async {
+    final name = await showNameDialog(
+      context: context,
+      title: 'Rename Device',
+      label: 'Device name',
+      initialValue: device.name,
+    );
+
+    if (!mounted || name == null || name.isEmpty) return;
+
+    setState(() {
+      device.name = name;
+    });
+
+    await updateDevice();
+  }
+
+  // ------------------------------------------------------------
+  // DEVICE INFORMATION ROW
+  // ------------------------------------------------------------
+
+  Widget informationRow(String title, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Text(
+              title,
+              style: TextStyle(color: Colors.grey.shade400),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              value,
+              textAlign: TextAlign.end,
+              style: const TextStyle(fontWeight: FontWeight.w600),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ------------------------------------------------------------
+  // UI
+  // ------------------------------------------------------------
+
+  @override
+  Widget build(BuildContext context) {
+    final statusColor = device.connectionStatus == 'Online'
+        ? Colors.green
+        : device.connectionStatus == 'Offline'
+            ? Colors.red
+            : Colors.orange;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Device Settings'),
+      ),
+      body: ListView(
+        padding: const EdgeInsets.all(16),
+        children: [
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                children: [
+                  const Icon(
+                    Icons.developer_board_outlined,
+                    size: 64,
+                    color: Colors.teal,
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    device.name,
+                    style: const TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.circle,
+                        size: 12,
+                        color: statusColor,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        device.connectionStatus,
+                        style: TextStyle(
+                          color: statusColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Device Information',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const Divider(height: 24),
+                  informationRow('Device Name', device.name),
+                  const Divider(height: 1),
+                  informationRow('Device UID', device.deviceUid),
+                  const Divider(height: 1),
+                  informationRow('Device Type', device.deviceType),
+                  const Divider(height: 1),
+                  informationRow('Gang Count', '${device.gangCount} Gang'),
+                  const Divider(height: 1),
+                  informationRow('Home ID', device.homeId),
+                  const Divider(height: 1),
+                  informationRow('Room', device.roomName),
+                  const Divider(height: 1),
+                  informationRow('Firmware', device.firmwareVersion),
+                  const Divider(height: 1),
+                  informationRow(
+                    'Last Seen',
+                    device.lastSeen ?? 'Not available',
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+          Card(
+            child: Column(
+              children: [
+                ListTile(
+                  leading: const Icon(Icons.edit_outlined),
+                  title: const Text('Rename Device'),
+                  subtitle: const Text('Change the device display name'),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: renameDevice,
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+          Card(
+            color: Colors.orange.withOpacity(0.12),
+            child: const Padding(
+              padding: EdgeInsets.all(16),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(Icons.info_outline, color: Colors.orange),
+                  SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      'Device information is currently simulated. '
+                      'Connection status and firmware details will be '
+                      'provided by the ESP32 hardware after integration.',
                     ),
                   ),
                 ],

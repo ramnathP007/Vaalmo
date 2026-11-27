@@ -1,0 +1,4361 @@
+    ~/development/android-studio/bin/studio.sh
+    vaalcom@Vaalcom:~/Downloads$
+
+To launch Android Studio on Ubuntu/Linux, run:
+bash
+
+~/development/android-studio/bin/studio.sh
+
+If you're already seeing this terminal prompt:
+bash
+
+vaalcom@Vaalcom:~/Downloads$
+
+You can execute the command directly:
+bash
+
+~/development/android-studio/bin/studio.sh
+
+If you get a permission error, run:
+bash
+
+chmod +x ~/development/android-studio/bin/studio.sh
+
+Then launch it again.
+
+Optional: Create a desktop shortcut so you can open Android Studio from the Applications menu.
+
+how to initate a fluter project in /home folder
+
+To create a new Flutter project inside your /home folder on Ubuntu, follow these steps.
+1. Open the terminal
+
+Go to your home directory:
+bash
+
+cd /home/$USER
+
+2. Create a Flutter project
+
+Run:
+bash
+
+flutter create my_flutter_app
+
+This creates the project at:
+text
+
+/home/your_username/my_flutter_app
+
+3. Open the project in Android Studio
+bash
+
+~/development/android-studio/bin/studio.sh ~/my_flutter_app
+
+4. Run your Flutter application
+
+Navigate into the project:
+bash
+
+cd ~/my_flutter_app
+
+Check connected devices:
+bash
+
+flutter devices
+
+Run the application:
+bash
+
+flutter run
+
+5. Verify Flutter setup (if needed)
+bash
+
+flutter doctor
+
+This checks Flutter, Android Studio, Android SDK, and connected devices.
+Expected result
+
+Your project structure:
+text
+
+/home/your_username/
+    └── my_flutter_app/
+        ├── android/
+        ├── ios/
+        ├── lib/
+        │   └── main.dart
+        ├── test/
+        ├── pubspec.yaml
+        └── web/
+
+Tip: Your Flutter application code will mainly be inside lib/main.dart.
+This might also interest you.
+Learn more
+Emergent Labs
+Build Real Apps Without Code
+Describe your idea, Emergent builds a production-ready app in minutes. Free — 10 credits included.
+Ad
+
+flutter create my_flutter_app
+Creating project my_flutter_app...
+Got dependencies in `my_flutter_app`.
+Wrote 131 files.
+
+All done!
+You can find general documentation for Flutter at: https://docs.flutter.dev/
+Detailed API documentation is available at: https://api.flutter.dev/
+If you prefer video documentation, consider: https://www.youtube.com/c/flutterdev
+
+In order to run your application, type:
+
+  $ cd my_flutter_app
+  $ flutter run
+
+Your application code is in my_flutter_app/lib/main.dart.
+
+vaalcom@Vaalcom:~/Downloads$ cd /home
+vaalcom@Vaalcom:/home$ ls
+lost+found  vaalcom
+vaalcom@Vaalcom:/home$ cd vaalcom/
+vaalcom@Vaalcom:~$ llls
+-bash: llls: command not found
+vaalcom@Vaalcom:~$ ls
+Android  Desktop  development  Documents  Downloads  Music  Pictures  Public  Templates  Videos
+vaalcom@Vaalcom:~$ locate my_flutter_app
+-bash: locate: command not found
+vaalcom@Vaalcom:~$ cd ~/my_flutter_app
+-bash: cd: /home/vaalcom/my_flutter_app: No such file or directory
+vaalcom@Vaalcom:~$
+
+Your Flutter project was created successfully, but it was created in your current directory (~/Downloads), not in /home/vaalcom.
+
+That's why cd ~/my_flutter_app says the directory doesn't exist.
+1. Find your Flutter project
+
+Since you ran flutter create from ~/Downloads, execute:
+bash
+
+cd ~/Downloads
+ls
+
+You should see:
+text
+
+my_flutter_app
+
+2. Move the project to your home folder
+
+Run:
+bash
+
+mv ~/Downloads/my_flutter_app ~/my_flutter_app
+
+3. Verify the project location
+bash
+
+cd ~/my_flutter_app
+ls
+
+You should see folders such as:
+text
+
+android
+ios
+lib
+test
+web
+pubspec.yaml
+
+4. Open it in Android Studio
+bash
+
+~/development/android-studio/bin/studio.sh ~/my_flutter_app
+
+5. Run your Flutter application
+bash
+
+cd ~/my_flutter_app
+flutter run
+
+Final project location
+text
+
+/home/vaalcom/my_flutter_app/
+
+Tip: Remember, ~ represents /home/vaalcom on your Ubuntu system.
+This might also interest you.
+Learn more
+AppToStore
+App Ready? We Handle Store Publishing
+App already built? We handle publishing on Google Play and the Apple App Store.
+Ad
+
+flutter run -d linux
+bash: flutter: command not found
+
+The error flutter: command not found means Flutter SDK is either not installed or its bin directory is not added to your Linux PATH.
+
+Since you already created a Flutter project, let's configure the Flutter command.
+1. Find your Flutter SDK
+
+Check where Flutter is installed:
+bash
+
+which flutter
+
+If nothing appears, search common locations:
+bash
+
+ls ~/development
+
+Look for a folder named flutter.
+2. If Flutter is inside ~/development/flutter
+
+Add Flutter to your PATH:
+bash
+
+echo 'export PATH="$PATH:$HOME/development/flutter/bin"' >> ~/.bashrc
+
+Reload your terminal configuration:
+bash
+
+source ~/.bashrc
+
+3. Verify Flutter
+bash
+
+flutter --version
+
+Then:
+bash
+
+flutter doctor
+
+4. Run your Linux application
+
+Navigate to your project:
+bash
+
+cd ~/my_flutter_app
+
+Run:
+bash
+
+flutter run -d linux
+
+5. If Linux desktop support is not enabled
+
+Run:
+bash
+
+flutter config --enable-linux-desktop
+
+You may also need Linux development dependencies:
+bash
+
+sudo apt update
+sudo apt install clang cmake ninja-build pkg-config libgtk-3-dev
+
+One question: What is the output of this command?
+bash
+
+ls ~/development
+
+I can help you identify your Flutter SDK location and configure PATH correctly.
+
+which flutter
+vaalcom@Vaalcom:~/my_flutter_app$
+
+The command which flutter returned no output. This means Flutter is not currently available in your system PATH.
+
+Let's locate your Flutter SDK first.
+
+Step 1. Run:
+bash
+
+ls ~/development
+
+Step 2. Also check:
+bash
+
+find ~ -type f -name flutter -executable 2>/dev/null | head -20
+
+Step 3. Share the output of both commands.
+
+I'll help you configure the correct Flutter PATH so you can run:
+bash
+
+flutter run -d linux
+
+No need to reinstall Flutter until we check whether it's already installed.
+
+ls ~/development
+android-sdk  android-studio  flutter
+vaalcom@Vaalcom:~/my_flutter_app$
+
+Great! Flutter is already installed here:
+text
+
+/home/vaalcom/development/flutter
+
+You just need to add Flutter to your PATH.
+1. Add Flutter to PATH
+
+Run:
+bash
+
+echo 'export PATH="$PATH:$HOME/development/flutter/bin"' >> ~/.bashrc
+
+2. Reload the terminal configuration
+bash
+
+source ~/.bashrc
+
+3. Verify Flutter installation
+bash
+
+which flutter
+
+Expected output:
+text
+
+/home/vaalcom/development/flutter/bin/flutter
+
+Check the version:
+bash
+
+flutter --version
+
+4. Enable Linux desktop support
+bash
+
+flutter config --enable-linux-desktop
+
+5. Install Linux dependencies
+bash
+
+sudo apt update
+sudo apt install clang cmake ninja-build pkg-config libgtk-3-dev
+
+6. Run your Flutter project
+bash
+
+cd ~/my_flutter_app
+flutter run -d linux
+
+You're almost ready!
+
+Your Flutter SDK and Android Studio are already in your development folder. Once PATH is configured, you can use Flutter commands from any terminal directory.
+
+vaalcom@Vaalcom:~/my_flutter_app$ flutter run -d linux
+bash: flutter: command not found
+vaalcom@Vaalcom:~/my_flutter_app$ cd ~/my_flutter_app
+flutter run -d linux
+bash: flutter: command not found
+vaalcom@Vaalcom:~/my_flutter_app$
+
+No problem. Flutter exists at ~/development/flutter, but your terminal is not recognizing the PATH configuration.
+
+Let's fix it directly.
+1. First, check the Flutter executable
+
+Run:
+bash
+
+ls -l ~/development/flutter/bin/flutter
+
+2. Temporarily add Flutter to PATH
+
+Copy and execute:
+bash
+
+export PATH="$HOME/development/flutter/bin:$PATH"
+
+3. Test Flutter
+bash
+
+which flutter
+flutter --version
+
+Expected path:
+text
+
+/home/vaalcom/development/flutter/bin/flutter
+
+4. Make the PATH permanent
+
+Run:
+bash
+
+echo 'export PATH="$HOME/development/flutter/bin:$PATH"' >> ~/.bashrc
+
+Then:
+bash
+
+source ~/.bashrc
+
+5. Run your project
+bash
+
+cd ~/my_flutter_app
+flutter run -d linux
+
+If it still doesn't work, execute this command and share the output:
+bash
+
+echo $PATH
+
+We'll get your Flutter environment working.
+
+ls -l ~/development/flutter/bin/flutter
+-rwxrwxr-x 1 vaalcom vaalcom 2385 Nov 27 10:12 /home/vaalcom/development/flutter/bin/flutter
+vaalcom@Vaalcom:~/my_flutter_app$
+
+Perfect! Flutter SDK found
+
+Your Flutter executable exists and has execution permissions. The issue is only your PATH configuration.
+
+Let's fix it.
+Step 1. Add Flutter to the current terminal PATH
+
+Copy and execute:
+bash
+
+export PATH="/home/vaalcom/development/flutter/bin:$PATH"
+
+Step 2. Verify
+bash
+
+which flutter
+
+Expected:
+text
+
+/home/vaalcom/development/flutter/bin/flutter
+
+Then:
+bash
+
+flutter --version
+
+Step 3. Save permanently
+bash
+
+echo 'export PATH="/home/vaalcom/development/flutter/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
+
+Step 4. Run your application
+bash
+
+cd ~/my_flutter_app
+flutter run -d linux
+
+Important: First complete Step 1 and Step 2. If they work, your Flutter installation is fine, and we can proceed with running your application.
+
+vaalcom@Vaalcom:~$ export PATH="/home/vaalcom/development/flutter/bin:$PATH"
+vaalcom@Vaalcom:~$ which flutter
+/home/vaalcom/development/flutter/bin/flutter
+vaalcom@Vaalcom:~$ flutter --version
+Flutter 3.50.1 • channel stable • https://github.com/flutter/flutter.git
+Framework • revision ae9b586f34 (9 days ago) • 2026-11-18 17:01:07 -0800
+Engine • hash 51379e6df48ea8ee7205623b90fe66491cad8df3 (revision 4d35714800) (9
+days ago) • 2026-11-18 01:50:07.000Z
+Tools • Dart 3.14.0 • DevTools 2.61.0
+vaalcom@Vaalcom:~$
+
+Excellent! Flutter successfully configured
+
+Your Flutter SDK is working correctly.
+
+    Flutter: 3.50.1
+
+    Dart: 3.14.0
+
+    Channel: Stable
+
+    SDK location: /home/vaalcom/development/flutter
+
+1. Make Flutter PATH permanent
+
+Run this command so Flutter works every time you open a terminal:
+bash
+
+echo 'export PATH="/home/vaalcom/development/flutter/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
+
+2. Enable Linux desktop development
+bash
+
+flutter config --enable-linux-desktop
+
+3. Check dependencies
+bash
+
+flutter doctor
+
+If Linux development dependencies are missing:
+bash
+
+sudo apt install clang cmake ninja-build pkg-config libgtk-3-dev
+
+4. Run your Flutter project
+bash
+
+cd ~/my_flutter_app
+flutter run -d linux
+
+5. Open the project in Android Studio
+bash
+
+~/development/android-studio/bin/studio.sh ~/my_flutter_app
+
+Next step: Once flutter doctor finishes, share its output. I'll help you configure Android and Linux development so you can run your Flutter application on both platforms.
+This might also interest you.
+Learn more
+Emergent Labs
+Build Real Apps Without Code
+Describe your idea, Emergent builds a production-ready app in minutes. Free — 10 credits included.
+Ad
+
+flutter config --enable-linux-desktop
+Setting "enable-linux-desktop" value to "true".
+
+You may need to restart any open editors for them to read new settings.
+vaalcom@Vaalcom:~$
+
+Great! Linux desktop support enabled
+
+Now let's finish configuring your Flutter environment.
+1. Check Flutter dependencies
+
+Run:
+bash
+
+flutter doctor
+
+2. Install Linux desktop dependencies (if not already installed)
+bash
+
+sudo apt update
+sudo apt install clang cmake ninja-build pkg-config libgtk-3-dev
+
+3. Navigate to your Flutter project
+bash
+
+cd ~/my_flutter_app
+
+4. Check available devices
+bash
+
+flutter devices
+
+You should see Linux listed as an available device.
+5. Run your application
+bash
+
+flutter run -d linux
+
+How to Make Your First Linux App With Flutter - Make Tech Easier
+ 
+
+Next: Run flutter doctor and share the output. I'll help resolve any remaining Android Studio or Linux setup issues.
+
+vaalcom@Vaalcom:~$ flutter doctor
+Doctor summary (to see all details, run flutter doctor -v):
+[✓] Flutter (Channel stable, 3.50.1, on Debian GNU/Linux 13 (trixie)
+    6.12.57+deb13-amd64, locale en_US.UTF-8)
+[!] Android toolchain - develop for Android devices (Android SDK version 36.0.0)
+    ✗ cmdline-tools component is missing.
+      Try installing or updating Android Studio.
+      Alternatively, download the tools from
+      https://developer.android.com/studio#command-line-tools-only and make sure
+      to set the ANDROID_HOME environment variable.
+      See https://developer.android.com/studio/command-line for more details.
+    ✗ Android license status unknown.
+      Run `flutter doctor --android-licenses` to accept the SDK licenses.
+      See https://flutter.dev/to/linux-android-setup for more details.
+[✗] Chrome - develop for the web (Cannot find Chrome executable at
+    google-chrome)
+    ! Cannot find Chrome. Try setting CHROME_EXECUTABLE to a Chrome executable.
+[✓] Linux toolchain - develop for Linux desktop
+    ! Unable to access driver information using 'eglinfo'.
+      It is likely available from your distribution (e.g.: apt install
+      mesa-utils)
+[✓] Connected device (1 available)
+[✓] Network resources
+
+! Doctor found issues in 2 categories.
+vaalcom@Vaalcom:~$
+
+Excellent! Your Flutter environment is almost ready. The important news is:
+Linux desktop toolchain working
+
+Your flutter doctor results show:
+
+Component
+	
+
+Status
+
+Flutter 3.50.1
+	
+
+Working
+
+Linux desktop
+	
+
+Working
+
+Android SDK
+	
+
+Needs setup
+
+Chrome / Web
+	
+
+Optional
+
+Since your immediate goal is to run Flutter applications on Linux, you can already proceed.
+1. Run your Flutter application now
+bash
+
+cd ~/my_flutter_app
+flutter run -d linux
+
+Your Linux desktop toolchain is already detected.
+2. Fix Android SDK command-line tools
+
+You have Android SDK installed at:
+text
+
+/home/vaalcom/development/android-sdk
+
+Open Android Studio:
+bash
+
+~/development/android-studio/bin/studio.sh
+
+Then:
+
+    Open More Actions → SDK Manager (or Settings → Languages & Frameworks → Android SDK).
+
+    Select the SDK Tools tab.
+
+    Enable Android SDK Command-line Tools (latest).
+
+    Click Apply and wait for installation.
+
+Set up the development environment | PICO Developer
+ 
+3. Accept Android licenses
+
+After installing command-line tools, run:
+bash
+
+flutter doctor --android-licenses
+
+Type y to accept the licenses when prompted.
+4. Optional: Install Chrome for Flutter Web
+
+Only if you want to develop Flutter web applications.
+
+You can skip this for Linux desktop and Android development.
+5. Verify everything
+bash
+
+flutter doctor
+
+Your next step
+
+First, try:
+bash
+
+cd ~/my_flutter_app
+flutter run -d linux
+
+You don't need to fix Chrome or Android SDK issues before running your Linux desktop application.
+
+Once the application launches, we can configure Android emulator support and run the same Flutter project on Android.
+
+flutter run -d linux works in terminal but not in VSCode terminal
+
+This happens because your normal terminal has the Flutter PATH configured, but VS Code was opened before the PATH configuration or is not loading your ~/.bashrc.
+
+Let's fix it.
+1. Add Flutter PATH permanently
+
+In your normal terminal, run:
+bash
+
+echo 'export PATH="$HOME/development/flutter/bin:$PATH"' >> ~/.bashrc
+
+2. Restart VS Code completely
+
+Close all VS Code windows, then reopen it from your terminal:
+bash
+
+code .
+
+Run this from your Flutter project directory:
+bash
+
+cd ~/my_flutter_app
+code .
+
+This allows VS Code to inherit the correct environment variables.
+3. Check Flutter inside VS Code terminal
+
+Open VS Code terminal (Ctrl + ~) and execute:
+bash
+
+which flutter
+
+Expected:
+text
+
+/home/vaalcom/development/flutter/bin/flutter
+
+Then:
+bash
+
+flutter --version
+
+4. Configure Flutter extension in VS Code
+
+If Flutter commands still aren't recognized:
+
+    Open VS Code.
+
+    Press Ctrl + Shift + P.
+
+    Search for Preferences: Open User Settings (JSON).
+
+    Add the following setting:
+
+json
+
+{
+    "dart.flutterSdkPath": "/home/vaalcom/development/flutter"
+}
+
+If your settings already contain other entries, add this property inside the existing JSON object rather than replacing everything.
+5. Run your application
+
+In the VS Code terminal:
+bash
+
+cd ~/my_flutter_app
+flutter run -d linux
+
+Expected result
+
+Flutter should work in both your normal terminal and VS Code terminal.
+
+One thing to check: Are you opening VS Code from the Applications menu or using code . from your terminal? This will help identify why the PATH isn't being inherited.
+
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+void main() {
+  runApp(const VaalmoApp());
+}
+
+// ============================================================
+// APP
+// ============================================================
+
+class VaalmoApp extends StatelessWidget {
+  const VaalmoApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Vaalmo Controls',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        brightness: Brightness.dark,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.teal,
+          brightness: Brightness.dark,
+        ),
+        useMaterial3: true,
+      ),
+      home: const HomeScreen(),
+    );
+  }
+}
+
+// ============================================================
+// REUSABLE TEXT DIALOG
+// ============================================================
+
+Future<String?> showNameDialog({
+  required BuildContext context,
+  required String title,
+  required String label,
+  String initialValue = '',
+  String buttonText = 'Save',
+}) async {
+  String enteredName = initialValue;
+
+  return showDialog<String>(
+    context: context,
+    builder: (dialogContext) {
+      return AlertDialog(
+        title: Text(title),
+        content: TextFormField(
+          initialValue: initialValue,
+          autofocus: true,
+          decoration: InputDecoration(
+            labelText: label,
+            border: const OutlineInputBorder(),
+          ),
+          onChanged: (value) {
+            enteredName = value.trim();
+          },
+          onFieldSubmitted: (value) {
+            Navigator.pop(dialogContext, value.trim());
+          },
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext),
+            child: const Text('Cancel'),
+          ),
+          FilledButton(
+            onPressed: () {
+              Navigator.pop(dialogContext, enteredName);
+            },
+            child: Text(buttonText),
+          ),
+        ],
+      );
+    },
+  );
+}
+
+// ============================================================
+// MODELS
+// ============================================================
+
+class VaalmoHome {
+  String id;
+  String name;
+  List<String> rooms;
+
+  VaalmoHome({
+    required this.id,
+    required this.name,
+    List<String>? rooms,
+  }) : rooms = rooms ?? [];
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+        'rooms': rooms,
+      };
+
+  factory VaalmoHome.fromJson(Map<String, dynamic> json) {
+    return VaalmoHome(
+      id: json['id']?.toString() ?? '',
+      name: json['name']?.toString() ?? 'My Home',
+      rooms: List<String>.from(json['rooms'] ?? []),
+    );
+  }
+}
+
+// ============================================================
+// SMART DEVICE MODEL
+// ============================================================
+
+class SmartDevice {
+  String id;
+  String deviceUid;
+  String name;
+  String homeId;
+  String roomName;
+  int gangCount;
+
+  List<String> relayNames;
+  List<bool> relayStates;
+
+  String deviceType;
+  String connectionStatus;
+  String firmwareVersion;
+  String? lastSeen;
+
+  SmartDevice({
+    required this.id,
+    required this.deviceUid,
+    required this.name,
+    required this.homeId,
+    required this.roomName,
+    required this.gangCount,
+    required this.relayNames,
+    required this.relayStates,
+    this.deviceType = 'Wi-Fi Smart Switch',
+    this.connectionStatus = 'Not Connected',
+    this.firmwareVersion = 'Unknown',
+    this.lastSeen,
+  });
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'deviceUid': deviceUid,
+        'name': name,
+        'homeId': homeId,
+        'roomName': roomName,
+        'gangCount': gangCount,
+        'relayNames': relayNames,
+        'relayStates': relayStates,
+        'deviceType': deviceType,
+        'connectionStatus': connectionStatus,
+        'firmwareVersion': firmwareVersion,
+        'lastSeen': lastSeen,
+      };
+
+  factory SmartDevice.fromJson(Map<String, dynamic> json) {
+    final count = (json['gangCount'] as num?)?.toInt() ?? 1;
+    final safeCount = count > 0 ? count : 1;
+
+    final names = List<String>.from(json['relayNames'] ?? []);
+    final states = List<bool>.from(json['relayStates'] ?? []);
+
+    while (names.length < safeCount) {
+      names.add('Relay ${names.length + 1}');
+    }
+
+    while (states.length < safeCount) {
+      states.add(false);
+    }
+
+    final internalId = json['id']?.toString() ?? '';
+
+    return SmartDevice(
+      id: internalId,
+      deviceUid: json['deviceUid']?.toString() ?? 'VAALMO-$internalId',
+      name: json['name']?.toString() ?? 'Switch',
+      homeId: json['homeId']?.toString() ?? '',
+      roomName: json['roomName']?.toString() ?? '',
+      gangCount: safeCount,
+      relayNames: names.take(safeCount).toList(),
+      relayStates: states.take(safeCount).toList(),
+      deviceType:
+          json['deviceType']?.toString() ?? 'Wi-Fi Smart Switch',
+      connectionStatus:
+          json['connectionStatus']?.toString() ?? 'Not Connected',
+      firmwareVersion:
+          json['firmwareVersion']?.toString() ?? 'Unknown',
+      lastSeen: json['lastSeen']?.toString(),
+    );
+  }
+}
+
+// ============================================================
+// HOME SCREEN
+// ============================================================
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  List<VaalmoHome> homes = [];
+  List<SmartDevice> devices = [];
+
+  String? selectedHomeId;
+  bool isLoading = true;
+
+  VaalmoHome? get selectedHome {
+    for (final home in homes) {
+      if (home.id == selectedHomeId) return home;
+    }
+    return null;
+  }
+
+  String createId() => DateTime.now().microsecondsSinceEpoch.toString();
+
+  @override
+  void initState() {
+    super.initState();
+    loadData();
+  }
+
+  // ------------------------------------------------------------
+  // LOAD DATA AND MIGRATE OLD VERSION
+  // ------------------------------------------------------------
+
+  Future<void> loadData() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    final savedHomes = prefs.getStringList('vaalmoHomes');
+    final savedDevices = prefs.getStringList('devices');
+
+    final loadedHomes = <VaalmoHome>[];
+    final loadedDevices = <SmartDevice>[];
+
+    if (savedHomes != null) {
+      for (final entry in savedHomes) {
+        try {
+          loadedHomes.add(
+            VaalmoHome.fromJson(jsonDecode(entry)),
+          );
+        } catch (error) {
+          debugPrint('Could not load home: $error');
+        }
+      }
+    }
+
+    if (savedDevices != null) {
+      for (final entry in savedDevices) {
+        try {
+          loadedDevices.add(
+            SmartDevice.fromJson(jsonDecode(entry)),
+          );
+        } catch (error) {
+          debugPrint('Could not load device: $error');
+        }
+      }
+    }
+
+    final usedIds = <String>{};
+
+    loadedHomes.removeWhere((home) {
+      if (home.id.isEmpty || usedIds.contains(home.id)) {
+        return true;
+      }
+      usedIds.add(home.id);
+      return false;
+    });
+
+    if (loadedHomes.isEmpty) {
+      final oldHomeName = prefs.getString('homeName');
+      final oldRooms = prefs.getStringList('rooms') ?? [];
+
+      if (oldHomeName != null && oldHomeName.isNotEmpty) {
+        final migratedHome = VaalmoHome(
+          id: createId(),
+          name: oldHomeName,
+          rooms: oldRooms,
+        );
+
+        loadedHomes.add(migratedHome);
+
+        for (final device in loadedDevices) {
+          device.homeId = migratedHome.id;
+        }
+      }
+    }
+
+    if (loadedHomes.length == 1) {
+      for (final device in loadedDevices) {
+        if (device.homeId.isEmpty) {
+          device.homeId = loadedHomes.first.id;
+        }
+      }
+    }
+
+    String? savedSelection = prefs.getString('selectedHomeId');
+
+    if (loadedHomes.isNotEmpty) {
+      if (!loadedHomes.any((home) => home.id == savedSelection)) {
+        savedSelection = loadedHomes.first.id;
+      }
+    } else {
+      savedSelection = null;
+    }
+
+    if (!mounted) return;
+
+    setState(() {
+      homes = loadedHomes;
+      devices = loadedDevices;
+      selectedHomeId = savedSelection;
+      isLoading = false;
+    });
+
+    await saveData();
+  }
+
+  // ------------------------------------------------------------
+  // SAVE DATA
+  // ------------------------------------------------------------
+
+  Future<void> saveData() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    await prefs.setStringList(
+      'vaalmoHomes',
+      homes.map((home) => jsonEncode(home.toJson())).toList(),
+    );
+
+    await prefs.setString(
+      'selectedHomeId',
+      selectedHomeId ?? '',
+    );
+
+    await prefs.setStringList(
+      'devices',
+      devices.map((device) => jsonEncode(device.toJson())).toList(),
+    );
+
+    await prefs.remove('homeName');
+    await prefs.remove('rooms');
+  }
+
+  // ------------------------------------------------------------
+  // CREATE HOME
+  // ------------------------------------------------------------
+
+  Future<void> createHome() async {
+    final name = await showNameDialog(
+      context: context,
+      title: 'Add New Home',
+      label: 'Home name',
+      buttonText: 'Create',
+    );
+
+    if (!mounted || name == null || name.isEmpty) return;
+
+    final newHome = VaalmoHome(
+      id: createId(),
+      name: name,
+    );
+
+    setState(() {
+      homes.add(newHome);
+      selectedHomeId = newHome.id;
+    });
+
+    await saveData();
+  }
+
+  // ------------------------------------------------------------
+  // RENAME HOME
+  // ------------------------------------------------------------
+
+  Future<void> renameHome(VaalmoHome home) async {
+    final name = await showNameDialog(
+      context: context,
+      title: 'Rename Home',
+      label: 'Home name',
+      initialValue: home.name,
+    );
+
+    if (!mounted || name == null || name.isEmpty) return;
+
+    setState(() {
+      home.name = name;
+    });
+
+    await saveData();
+  }
+
+  // ------------------------------------------------------------
+  // DELETE HOME
+  // ------------------------------------------------------------
+
+  Future<void> deleteHome(VaalmoHome home) async {
+    final confirm = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('Delete Home?'),
+        content: Text(
+          'Delete "${home.name}" and all its rooms and devices?',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, false),
+            child: const Text('Cancel'),
+          ),
+          FilledButton(
+            style: FilledButton.styleFrom(backgroundColor: Colors.red),
+            onPressed: () => Navigator.pop(dialogContext, true),
+            child: const Text('Delete'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirm != true || !mounted) return;
+
+    setState(() {
+      homes.removeWhere((item) => item.id == home.id);
+      devices.removeWhere((item) => item.homeId == home.id);
+
+      if (selectedHomeId == home.id) {
+        selectedHomeId = homes.isNotEmpty ? homes.first.id : null;
+      }
+    });
+
+    await saveData();
+  }
+
+  // ------------------------------------------------------------
+  // CREATE ROOM
+  // ------------------------------------------------------------
+
+  Future<void> addRoom() async {
+    final home = selectedHome;
+    if (home == null) return;
+
+    final roomName = await showNameDialog(
+      context: context,
+      title: 'Add Room',
+      label: 'Room name',
+      buttonText: 'Add',
+    );
+
+    if (!mounted || roomName == null || roomName.isEmpty) return;
+
+    if (home.rooms.any(
+      (room) => room.toLowerCase() == roomName.toLowerCase(),
+    )) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Room already exists')),
+      );
+      return;
+    }
+
+    setState(() {
+      home.rooms.add(roomName);
+    });
+
+    await saveData();
+  }
+
+  // ------------------------------------------------------------
+  // RENAME ROOM
+  // ------------------------------------------------------------
+
+  Future<void> renameRoom(String oldName) async {
+    final home = selectedHome;
+    if (home == null) return;
+
+    final newName = await showNameDialog(
+      context: context,
+      title: 'Rename Room',
+      label: 'Room name',
+      initialValue: oldName,
+    );
+
+    if (!mounted ||
+        newName == null ||
+        newName.isEmpty ||
+        newName == oldName) {
+      return;
+    }
+
+    if (home.rooms.any(
+      (room) => room.toLowerCase() == newName.toLowerCase(),
+    )) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Room already exists')),
+      );
+      return;
+    }
+
+    setState(() {
+      final index = home.rooms.indexOf(oldName);
+
+      if (index != -1) {
+        home.rooms[index] = newName;
+      }
+
+      for (final device in devices) {
+        if (device.homeId == home.id && device.roomName == oldName) {
+          device.roomName = newName;
+        }
+      }
+    });
+
+    await saveData();
+  }
+
+  // ------------------------------------------------------------
+  // DELETE ROOM
+  // ------------------------------------------------------------
+
+  Future<void> deleteRoom(String roomName) async {
+    final home = selectedHome;
+    if (home == null) return;
+
+    final confirm = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('Delete Room?'),
+        content: Text('Delete "$roomName" and all devices inside it?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, false),
+            child: const Text('Cancel'),
+          ),
+          FilledButton(
+            style: FilledButton.styleFrom(backgroundColor: Colors.red),
+            onPressed: () => Navigator.pop(dialogContext, true),
+            child: const Text('Delete'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirm != true || !mounted) return;
+
+    setState(() {
+      home.rooms.remove(roomName);
+
+      devices.removeWhere(
+        (device) =>
+            device.homeId == home.id && device.roomName == roomName,
+      );
+    });
+
+    await saveData();
+  }
+
+  // ------------------------------------------------------------
+  // DEVICE OPERATIONS
+  // ------------------------------------------------------------
+
+  Future<void> addDevice(SmartDevice device) async {
+    setState(() {
+      devices.add(device);
+    });
+
+    await saveData();
+  }
+
+  Future<void> updateDevice(SmartDevice updatedDevice) async {
+    final index = devices.indexWhere(
+      (device) => device.id == updatedDevice.id,
+    );
+
+    if (index == -1) return;
+
+    setState(() {
+      devices[index] = updatedDevice;
+    });
+
+    await saveData();
+  }
+
+  Future<void> deleteDevice(String deviceId) async {
+    setState(() {
+      devices.removeWhere((device) => device.id == deviceId);
+    });
+
+    await saveData();
+  }
+
+  // ------------------------------------------------------------
+  // MAIN UI
+  // ------------------------------------------------------------
+
+  @override
+  Widget build(BuildContext context) {
+    if (isLoading) {
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    final home = selectedHome;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Vaalmo Controls'),
+        actions: [
+          if (home != null)
+            IconButton(
+              tooltip: 'Rename Home',
+              icon: const Icon(Icons.edit_outlined),
+              onPressed: () => renameHome(home),
+            ),
+          if (home != null)
+            IconButton(
+              tooltip: 'Delete Home',
+              icon: const Icon(Icons.delete_outline),
+              onPressed: () => deleteHome(home),
+            ),
+        ],
+      ),
+      body: home == null ? _buildEmptyHomes() : _buildHomeDashboard(home),
+      floatingActionButton: home != null
+          ? FloatingActionButton.extended(
+              onPressed: addRoom,
+              icon: const Icon(Icons.add),
+              label: const Text('Add Room'),
+            )
+          : null,
+    );
+  }
+
+  // ------------------------------------------------------------
+  // EMPTY HOMES
+  // ------------------------------------------------------------
+
+  Widget _buildEmptyHomes() {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(
+              Icons.home_outlined,
+              size: 90,
+              color: Colors.teal,
+            ),
+            const SizedBox(height: 16),
+            const Text(
+              'Welcome to Vaalmo Controls',
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 8),
+            const Text(
+              'Create a home to get started.',
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 24),
+            FilledButton.icon(
+              onPressed: createHome,
+              icon: const Icon(Icons.add_home),
+              label: const Text('Add Your First Home'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // ------------------------------------------------------------
+  // HOME DASHBOARD
+  // ------------------------------------------------------------
+
+  Widget _buildHomeDashboard(VaalmoHome home) {
+    final homeDevices = devices
+        .where((device) => device.homeId == home.id)
+        .toList();
+
+    final totalRelays = homeDevices.fold<int>(
+      0,
+      (sum, device) => sum + device.gangCount,
+    );
+
+    final activeRelays = homeDevices.fold<int>(
+      0,
+      (sum, device) =>
+          sum + device.relayStates.where((state) => state).length,
+    );
+
+    final dropdownValue = homes.any((item) => item.id == selectedHomeId)
+        ? selectedHomeId
+        : homes.first.id;
+
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+          child: Row(
+            children: [
+              Expanded(
+                child: DropdownButtonFormField<String>(
+                  key: ValueKey(dropdownValue),
+                  initialValue: dropdownValue,
+                  decoration: const InputDecoration(
+                    labelText: 'Select Home',
+                    border: OutlineInputBorder(),
+                  ),
+                  items: homes.map((item) {
+                    return DropdownMenuItem<String>(
+                      value: item.id,
+                      child: Text(item.name),
+                    );
+                  }).toList(),
+                  onChanged: (value) async {
+                    if (value == null) return;
+
+                    setState(() {
+                      selectedHomeId = value;
+                    });
+
+                    await saveData();
+                  },
+                ),
+              ),
+              const SizedBox(width: 8),
+              IconButton.filled(
+                tooltip: 'Add Home',
+                onPressed: createHome,
+                icon: const Icon(Icons.add_home),
+              ),
+            ],
+          ),
+        ),
+        Card(
+          margin: const EdgeInsets.all(16),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              children: [
+                const Icon(Icons.home, size: 40, color: Colors.teal),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        home.name,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text('${home.rooms.length} rooms'),
+                      Text('${homeDevices.length} switches'),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Card(
+          margin: const EdgeInsets.symmetric(horizontal: 16),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Relay Overview',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 12),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text('Active Relays'),
+                    Text('$activeRelays / $totalRelays'),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                LinearProgressIndicator(
+                  value: totalRelays == 0 ? 0 : activeRelays / totalRelays,
+                  minHeight: 8,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Expanded(
+          child: home.rooms.isEmpty
+              ? _buildEmptyRooms()
+              : ListView.builder(
+                  padding: const EdgeInsets.all(16),
+                  itemCount: home.rooms.length,
+                  itemBuilder: (context, index) {
+                    final roomName = home.rooms[index];
+
+                    final roomDevices = devices
+                        .where(
+                          (device) =>
+                              device.homeId == home.id &&
+                              device.roomName == roomName,
+                        )
+                        .toList();
+
+                    final roomRelayCount = roomDevices.fold<int>(
+                      0,
+                      (sum, device) => sum + device.gangCount,
+                    );
+
+                    final roomActiveCount = roomDevices.fold<int>(
+                      0,
+                      (sum, device) =>
+                          sum +
+                          device.relayStates.where((state) => state).length,
+                    );
+
+                    return Card(
+                      child: ListTile(
+                        leading: const CircleAvatar(
+                          child: Icon(Icons.meeting_room_outlined),
+                        ),
+                        title: Text(roomName),
+                        subtitle: Text(
+                          '${roomDevices.length} switches • '
+                          '$roomActiveCount/$roomRelayCount relays ON',
+                        ),
+                        trailing: PopupMenuButton<String>(
+                          onSelected: (value) {
+                            if (value == 'rename') {
+                              renameRoom(roomName);
+                            } else if (value == 'delete') {
+                              deleteRoom(roomName);
+                            }
+                          },
+                          itemBuilder: (context) => [
+                            const PopupMenuItem(
+                              value: 'rename',
+                              child: Row(
+                                children: [
+                                  Icon(Icons.edit_outlined),
+                                  SizedBox(width: 8),
+                                  Text('Rename Room'),
+                                ],
+                              ),
+                            ),
+                            const PopupMenuItem(
+                              value: 'delete',
+                              child: Row(
+                                children: [
+                                  Icon(Icons.delete_outline),
+                                  SizedBox(width: 8),
+                                  Text('Delete Room'),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => RoomDetailsScreen(
+                                homeId: home.id,
+                                roomName: roomName,
+                                devices: devices,
+                                onAddDevice: addDevice,
+                                onUpdateDevice: updateDevice,
+                                onDeleteDevice: deleteDevice,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  },
+                ),
+        ),
+      ],
+    );
+  }
+
+  // ------------------------------------------------------------
+  // EMPTY ROOMS
+  // ------------------------------------------------------------
+
+  Widget _buildEmptyRooms() {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(
+              Icons.meeting_room_outlined,
+              size: 70,
+              color: Colors.teal,
+            ),
+            const SizedBox(height: 16),
+            const Text(
+              'No rooms added yet',
+              style: TextStyle(fontSize: 18),
+            ),
+            const SizedBox(height: 8),
+            const Text(
+              'Add rooms to organize your switches.',
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 16),
+            FilledButton.icon(
+              onPressed: addRoom,
+              icon: const Icon(Icons.add),
+              label: const Text('Add Room'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ============================================================
+// ROOM DETAILS
+// ============================================================
+
+class RoomDetailsScreen extends StatefulWidget {
+  final String homeId;
+  final String roomName;
+  final List<SmartDevice> devices;
+
+  final Future<void> Function(SmartDevice) onAddDevice;
+  final Future<void> Function(SmartDevice) onUpdateDevice;
+  final Future<void> Function(String) onDeleteDevice;
+
+  const RoomDetailsScreen({
+    super.key,
+    required this.homeId,
+    required this.roomName,
+    required this.devices,
+    required this.onAddDevice,
+    required this.onUpdateDevice,
+    required this.onDeleteDevice,
+  });
+
+  @override
+  State<RoomDetailsScreen> createState() => _RoomDetailsScreenState();
+}
+
+class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
+  List<SmartDevice> get roomDevices {
+    return widget.devices
+        .where(
+          (device) =>
+              device.homeId == widget.homeId &&
+              device.roomName == widget.roomName,
+        )
+        .toList();
+  }
+
+  Future<void> addSwitch() async {
+    final newDevice = await Navigator.push<SmartDevice>(
+      context,
+      MaterialPageRoute(
+        builder: (context) => AddDeviceScreen(
+          homeId: widget.homeId,
+          roomName: widget.roomName,
+        ),
+      ),
+    );
+
+    if (newDevice != null) {
+      await widget.onAddDevice(newDevice);
+      if (mounted) setState(() {});
+    }
+  }
+
+  Future<void> openDevice(SmartDevice device) async {
+    final deletedId = await Navigator.push<String>(
+      context,
+      MaterialPageRoute(
+        builder: (context) => DeviceControlScreen(
+          device: device,
+          onUpdate: widget.onUpdateDevice,
+        ),
+      ),
+    );
+
+    if (deletedId != null) {
+      await widget.onDeleteDevice(deletedId);
+    }
+
+    if (mounted) setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final currentDevices = roomDevices;
+
+    return Scaffold(
+      appBar: AppBar(title: Text(widget.roomName)),
+      body: currentDevices.isEmpty
+          ? Center(
+              child: Padding(
+                padding: const EdgeInsets.all(24),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(
+                      Icons.power_outlined,
+                      size: 80,
+                      color: Colors.teal,
+                    ),
+                    const SizedBox(height: 16),
+                    const Text(
+                      'No switches in this room',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    const SizedBox(height: 16),
+                    FilledButton.icon(
+                      onPressed: addSwitch,
+                      icon: const Icon(Icons.add),
+                      label: const Text('Add Switch'),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          : ListView.builder(
+              padding: const EdgeInsets.all(16),
+              itemCount: currentDevices.length,
+              itemBuilder: (context, index) {
+                final device = currentDevices[index];
+                final activeCount =
+                    device.relayStates.where((state) => state).length;
+
+                return Card(
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      backgroundColor:
+                          activeCount > 0 ? Colors.teal : Colors.grey,
+                      child: const Icon(Icons.power),
+                    ),
+                    title: Text(device.name),
+                    subtitle: Text(
+                      '${device.gangCount} gang • '
+                      '$activeCount relays ON\n'
+                      '${device.deviceUid}',
+                    ),
+                    isThreeLine: true,
+                    trailing: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(Icons.chevron_right),
+                        Text(
+                          device.connectionStatus,
+                          style: const TextStyle(fontSize: 10),
+                        ),
+                      ],
+                    ),
+                    onTap: () => openDevice(device),
+                  ),
+                );
+              },
+            ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: addSwitch,
+        icon: const Icon(Icons.add),
+        label: const Text('Add Switch'),
+      ),
+    );
+  }
+}
+
+// ============================================================
+// ADD DEVICE
+// ============================================================
+
+class AddDeviceScreen extends StatefulWidget {
+  final String homeId;
+  final String roomName;
+
+  const AddDeviceScreen({
+    super.key,
+    required this.homeId,
+    required this.roomName,
+  });
+
+  @override
+  State<AddDeviceScreen> createState() => _AddDeviceScreenState();
+}
+
+class _AddDeviceScreenState extends State<AddDeviceScreen> {
+  final TextEditingController nameController = TextEditingController();
+  int selectedGangCount = 1;
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    super.dispose();
+  }
+
+  void createDevice() {
+    final name = nameController.text.trim();
+
+    if (name.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Enter a switch name')),
+      );
+      return;
+    }
+
+    final id = DateTime.now().microsecondsSinceEpoch.toString();
+
+    final device = SmartDevice(
+      id: id,
+      deviceUid: 'VAALMO-$id',
+      name: name,
+      homeId: widget.homeId,
+      roomName: widget.roomName,
+      gangCount: selectedGangCount,
+      relayNames: List.generate(
+        selectedGangCount,
+        (index) => 'Relay ${index + 1}',
+      ),
+      relayStates: List.generate(selectedGangCount, (_) => false),
+    );
+
+    Navigator.pop(context, device);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Add Switch')),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: ListView(
+          children: [
+            TextField(
+              controller: nameController,
+              autofocus: true,
+              decoration: const InputDecoration(
+                labelText: 'Switch name',
+                hintText: 'e.g. Living Room Switch',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 24),
+            const Text(
+              'Select Switch Type',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 12),
+            ...[1, 2, 4].map((gang) {
+              return Card(
+                child: RadioListTile<int>(
+                  value: gang,
+                  groupValue: selectedGangCount,
+                  title: Text('$gang-Gang Switch'),
+                  subtitle: Text(
+                    '$gang independent relay${gang > 1 ? 's' : ''}',
+                  ),
+                  secondary: Icon(
+                    Icons.power,
+                    color: selectedGangCount == gang ? Colors.teal : null,
+                  ),
+                  onChanged: (value) {
+                    if (value != null) {
+                      setState(() {
+                        selectedGangCount = value;
+                      });
+                    }
+                  },
+                ),
+              );
+            }),
+            const SizedBox(height: 24),
+            FilledButton.icon(
+              onPressed: createDevice,
+              icon: const Icon(Icons.add),
+              label: const Text('Create Switch'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ============================================================
+// DEVICE CONTROL
+// ============================================================
+
+class DeviceControlScreen extends StatefulWidget {
+  final SmartDevice device;
+  final Future<void> Function(SmartDevice) onUpdate;
+
+  const DeviceControlScreen({
+    super.key,
+    required this.device,
+    required this.onUpdate,
+  });
+
+  @override
+  State<DeviceControlScreen> createState() => _DeviceControlScreenState();
+}
+
+class _DeviceControlScreenState extends State<DeviceControlScreen> {
+  late SmartDevice device;
+
+  @override
+  void initState() {
+    super.initState();
+    device = widget.device;
+  }
+
+  Future<void> persist() async {
+    await widget.onUpdate(device);
+  }
+
+  // ------------------------------------------------------------
+  // RENAME SWITCH
+  // ------------------------------------------------------------
+
+  Future<void> renameSwitch() async {
+    final name = await showNameDialog(
+      context: context,
+      title: 'Rename Switch',
+      label: 'Switch name',
+      initialValue: device.name,
+    );
+
+    if (!mounted || name == null || name.isEmpty) return;
+
+    setState(() {
+      device.name = name;
+    });
+
+    await persist();
+  }
+
+  // ------------------------------------------------------------
+  // RENAME RELAY
+  // ------------------------------------------------------------
+
+  Future<void> renameRelay(int index) async {
+    final name = await showNameDialog(
+      context: context,
+      title: 'Rename ${device.relayNames[index]}',
+      label: 'Relay name',
+      initialValue: device.relayNames[index],
+    );
+
+    if (!mounted || name == null || name.isEmpty) return;
+
+    setState(() {
+      device.relayNames[index] = name;
+    });
+
+    await persist();
+  }
+
+  // ------------------------------------------------------------
+  // RELAY TOGGLE
+  // ------------------------------------------------------------
+
+  Future<void> toggleRelay(int index, bool value) async {
+    setState(() {
+      device.relayStates[index] = value;
+    });
+
+    await persist();
+  }
+
+  // ------------------------------------------------------------
+  // DELETE SWITCH
+  // ------------------------------------------------------------
+
+  Future<void> deleteSwitch() async {
+    final confirm = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('Delete Switch?'),
+        content: Text('Delete "${device.name}"?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, false),
+            child: const Text('Cancel'),
+          ),
+          FilledButton(
+            style: FilledButton.styleFrom(backgroundColor: Colors.red),
+            onPressed: () => Navigator.pop(dialogContext, true),
+            child: const Text('Delete'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirm != true || !mounted) return;
+
+    Navigator.pop(context, device.id);
+  }
+
+  // ------------------------------------------------------------
+  // DEVICE SETTINGS
+  // ------------------------------------------------------------
+
+  Future<void> openDeviceSettings() async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => DeviceSettingsScreen(
+          device: device,
+          onUpdate: (updatedDevice) async {
+            if (!mounted) return;
+
+            setState(() {
+              device = updatedDevice;
+            });
+
+            await persist();
+          },
+        ),
+      ),
+    );
+
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
+  // ------------------------------------------------------------
+  // UI
+  // ------------------------------------------------------------
+
+  @override
+  Widget build(BuildContext context) {
+    final activeCount =
+        device.relayStates.where((state) => state).length;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(device.name),
+        actions: [
+          IconButton(
+            tooltip: 'Device Settings',
+            icon: const Icon(Icons.settings_outlined),
+            onPressed: openDeviceSettings,
+          ),
+          PopupMenuButton<String>(
+            onSelected: (value) {
+              if (value == 'rename') {
+                renameSwitch();
+              } else if (value == 'delete') {
+                deleteSwitch();
+              }
+            },
+            itemBuilder: (context) => [
+              const PopupMenuItem(
+                value: 'rename',
+                child: Text('Rename Switch'),
+              ),
+              const PopupMenuItem(
+                value: 'delete',
+                child: Text('Delete Switch'),
+              ),
+            ],
+          ),
+        ],
+      ),
+      body: ListView(
+        padding: const EdgeInsets.all(16),
+        children: [
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                children: [
+                  Icon(
+                    activeCount > 0 ? Icons.power : Icons.power_outlined,
+                    size: 60,
+                    color: activeCount > 0 ? Colors.teal : Colors.grey,
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    device.name,
+                    style: const TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text('$activeCount / ${device.gangCount} Relays ON'),
+                  const SizedBox(height: 16),
+                  LinearProgressIndicator(
+                    value: device.gangCount == 0
+                        ? 0
+                        : activeCount / device.gangCount,
+                    minHeight: 8,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+          ...List.generate(device.gangCount, (index) {
+            final isOn = device.relayStates[index];
+
+            return Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        CircleAvatar(
+                          backgroundColor: isOn ? Colors.teal : Colors.grey,
+                          child: Icon(
+                            isOn
+                                ? Icons.lightbulb
+                                : Icons.lightbulb_outline,
+                            color: Colors.white,
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                device.relayNames[index],
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(isOn ? 'ON' : 'OFF'),
+                            ],
+                          ),
+                        ),
+                        IconButton(
+                          tooltip: 'Rename Relay',
+                          icon: const Icon(Icons.edit_outlined),
+                          onPressed: () => renameRelay(index),
+                        ),
+                        Switch(
+                          value: isOn,
+                          onChanged: (value) => toggleRelay(index, value),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    SizedBox(
+                      width: double.infinity,
+                      child: FilledButton.tonal(
+                        onPressed: () => toggleRelay(index, !isOn),
+                        child: Text(isOn ? 'Turn OFF' : 'Turn ON'),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }),
+          const SizedBox(height: 16),
+          Card(
+            color: Colors.orange.withOpacity(0.12),
+            child: const Padding(
+              padding: EdgeInsets.all(16),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(Icons.info_outline, color: Colors.orange),
+                  SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      'Simulation Mode\n'
+                      'These relay controls currently operate locally '
+                      'inside the app. No physical switch is connected yet.',
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ============================================================
+// DEVICE SETTINGS SCREEN
+// ============================================================
+
+class DeviceSettingsScreen extends StatefulWidget {
+  final SmartDevice device;
+  final Future<void> Function(SmartDevice) onUpdate;
+
+  const DeviceSettingsScreen({
+    super.key,
+    required this.device,
+    required this.onUpdate,
+  });
+
+  @override
+  State<DeviceSettingsScreen> createState() =>
+      _DeviceSettingsScreenState();
+}
+
+class _DeviceSettingsScreenState extends State<DeviceSettingsScreen> {
+  late SmartDevice device;
+
+  @override
+  void initState() {
+    super.initState();
+    device = widget.device;
+  }
+
+  Future<void> updateDevice() async {
+    await widget.onUpdate(device);
+
+    if (!mounted) return;
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Device information saved')),
+    );
+  }
+
+  // ------------------------------------------------------------
+  // RENAME DEVICE - FIXED
+  // ------------------------------------------------------------
+
+  Future<void> renameDevice() async {
+    final name = await showNameDialog(
+      context: context,
+      title: 'Rename Device',
+      label: 'Device name',
+      initialValue: device.name,
+    );
+
+    if (!mounted || name == null || name.isEmpty) return;
+
+    setState(() {
+      device.name = name;
+    });
+
+    await updateDevice();
+  }
+
+  // ------------------------------------------------------------
+  // DEVICE INFORMATION ROW
+  // ------------------------------------------------------------
+
+  Widget informationRow(String title, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Text(
+              title,
+              style: TextStyle(color: Colors.grey.shade400),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              value,
+              textAlign: TextAlign.end,
+              style: const TextStyle(fontWeight: FontWeight.w600),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ------------------------------------------------------------
+  // UI
+  // ------------------------------------------------------------
+
+  @override
+  Widget build(BuildContext context) {
+    final statusColor = device.connectionStatus == 'Online'
+        ? Colors.green
+        : device.connectionStatus == 'Offline'
+            ? Colors.red
+            : Colors.orange;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Device Settings'),
+      ),
+      body: ListView(
+        padding: const EdgeInsets.all(16),
+        children: [
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                children: [
+                  const Icon(
+                    Icons.developer_board_outlined,
+                    size: 64,
+                    color: Colors.teal,
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    device.name,
+                    style: const TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.circle,
+                        size: 12,
+                        color: statusColor,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        device.connectionStatus,
+                        style: TextStyle(
+                          color: statusColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Device Information',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const Divider(height: 24),
+                  informationRow('Device Name', device.name),
+                  const Divider(height: 1),
+                  informationRow('Device UID', device.deviceUid),
+                  const Divider(height: 1),
+                  informationRow('Device Type', device.deviceType),
+                  const Divider(height: 1),
+                  informationRow('Gang Count', '${device.gangCount} Gang'),
+                  const Divider(height: 1),
+                  informationRow('Home ID', device.homeId),
+                  const Divider(height: 1),
+                  informationRow('Room', device.roomName),
+                  const Divider(height: 1),
+                  informationRow('Firmware', device.firmwareVersion),
+                  const Divider(height: 1),
+                  informationRow(
+                    'Last Seen',
+                    device.lastSeen ?? 'Not available',
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+          Card(
+            child: Column(
+              children: [
+                ListTile(
+                  leading: const Icon(Icons.edit_outlined),
+                  title: const Text('Rename Device'),
+                  subtitle: const Text('Change the device display name'),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: renameDevice,
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+          Card(
+            color: Colors.orange.withOpacity(0.12),
+            child: const Padding(
+              padding: EdgeInsets.all(16),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(Icons.info_outline, color: Colors.orange),
+                  SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      'Device information is currently simulated. '
+                      'Connection status and firmware details will be '
+                      'provided by the ESP32 hardware after integration.',
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+This is my code and I am getting the below error
+
+vaalcom@Vaalcom:~/my_flutter_app$ flutter run -d linux
+Launching lib/main.dart on Linux in debug mode...
+Building Linux application...                                         
+ERROR: Error: Couldn't resolve the package 'shared_preferences' in 'package:shared_preferences/shared_preferences.dart'.
+Building Linux application...                                         
+ERROR: lib/main.dart:5:8: Error: Not found: 'package:shared_preferences/shared_preferences.dart'
+Building Linux application...                                         
+ERROR: import 'package:shared_preferences/shared_preferences.dart';
+Building Linux application...                                         
+ERROR:        ^
+Building Linux application...                                         
+ERROR: lib/main.dart:240:25: Error: The getter 'SharedPreferences' isn't defined for the type '_HomeScreenState'.
+Building Linux application...                                         
+ERROR:  - '_HomeScreenState' is from 'package:my_flutter_app/main.dart' ('lib/main.dart').
+Building Linux application...                                         
+ERROR: Try correcting the name to the name of an existing getter, or defining a getter or field named 'SharedPreferences'.
+Building Linux application...                                         
+ERROR:     final prefs = await SharedPreferences.getInstance();
+Building Linux application...                                         
+ERROR:                         ^^^^^^^^^^^^^^^^^
+Building Linux application...                                         
+ERROR: lib/main.dart:336:25: Error: The getter 'SharedPreferences' isn't defined for the type '_HomeScreenState'.
+Building Linux application...                                         
+ERROR:  - '_HomeScreenState' is from 'package:my_flutter_app/main.dart' ('lib/main.dart').
+Building Linux application...                                         
+ERROR: Try correcting the name to the name of an existing getter, or defining a getter or field named 'SharedPreferences'.
+Building Linux application...                                         
+ERROR:     final prefs = await SharedPreferences.getInstance();
+Building Linux application...                                         
+ERROR:                         ^^^^^^^^^^^^^^^^^
+Building Linux application...                                         
+ERROR: Unhandled exception:
+Building Linux application...                                         
+ERROR: art; message=StandardFileSystem only supports file:* and data:* URIs)
+Building Linux application...                                         
+ERROR: Target kernel_snapshot_program failed: Exception
+Building Linux application...                                           
+Error: Build process failed
+vaalcom@Vaalcom:~/my_flutter_app$
+
+Your Flutter code is fine in terms of the shared_preferences API usage. The problem is that the shared_preferences package is not installed or resolved in your Flutter project.
+
+You are importing:
+dart
+
+import 'package:shared_preferences/shared_preferences.dart';
+
+But Flutter cannot find that dependency.
+
+Let's fix it.
+1. Navigate to your project
+bash
+
+cd ~/my_flutter_app
+
+2. Install shared_preferences
+
+Run:
+bash
+
+flutter pub add shared_preferences
+
+This automatically:
+
+    Adds shared_preferences to pubspec.yaml.
+
+    Downloads the package.
+
+    Resolves its dependencies.
+
+    Configures the package for supported platforms, including Linux.
+
+3. Verify pubspec.yaml
+
+Open your pubspec.yaml file.
+
+You should see something similar to:
+yaml
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  shared_preferences: ^2.5.0
+
+The exact version may differ. That's perfectly fine.
+4. Get dependencies
+
+Run:
+bash
+
+flutter pub get
+
+5. Clean and rebuild
+
+Run these commands:
+bash
+
+flutter clean
+flutter pub get
+flutter run -d linux
+
+Expected result
+
+Your Vaalmo Controls application should now compile and launch.
+6. Verify your application functionality
+
+Once launched, test these features:
+
+    Create a Home.
+
+    Add rooms (Living Room, Bedroom, Kitchen).
+
+    Add a 1-Gang, 2-Gang or 4-Gang switch.
+
+    Open a switch and toggle relays.
+
+    Rename relays and devices.
+
+    Close and reopen the application.
+
+    Verify that your homes, rooms and devices are still saved.
+
+Important: Your application uses SharedPreferences for local storage. This means your home, room and device configurations will persist locally on the computer, even after closing the application.
+
+You don't need to change your main.dart code to fix this particular error.
+This might also interest you.
+Learn more
+Emergent Labs
+Build Real Apps Without Code
+Describe your idea, Emergent builds a production-ready app in minutes. Free — 10 credits included.
+Ad
+
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+void main() {
+  runApp(const VaalmoApp());
+}
+
+// ============================================================
+// APP
+// ============================================================
+
+class VaalmoApp extends StatelessWidget {
+  const VaalmoApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Vaalmo Controls',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        brightness: Brightness.dark,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.teal,
+          brightness: Brightness.dark,
+        ),
+        useMaterial3: true,
+      ),
+      home: const HomeScreen(),
+    );
+  }
+}
+
+// ============================================================
+// REUSABLE TEXT DIALOG
+// ============================================================
+
+Future<String?> showNameDialog({
+  required BuildContext context,
+  required String title,
+  required String label,
+  String initialValue = '',
+  String buttonText = 'Save',
+}) async {
+  String enteredName = initialValue;
+
+  return showDialog<String>(
+    context: context,
+    builder: (dialogContext) {
+      return AlertDialog(
+        title: Text(title),
+        content: TextFormField(
+          initialValue: initialValue,
+          autofocus: true,
+          decoration: InputDecoration(
+            labelText: label,
+            border: const OutlineInputBorder(),
+          ),
+          onChanged: (value) {
+            enteredName = value.trim();
+          },
+          onFieldSubmitted: (value) {
+            Navigator.pop(dialogContext, value.trim());
+          },
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext),
+            child: const Text('Cancel'),
+          ),
+          FilledButton(
+            onPressed: () {
+              Navigator.pop(dialogContext, enteredName);
+            },
+            child: Text(buttonText),
+          ),
+        ],
+      );
+    },
+  );
+}
+
+// ============================================================
+// MODELS
+// ============================================================
+
+class VaalmoHome {
+  String id;
+  String name;
+  List<String> rooms;
+
+  VaalmoHome({
+    required this.id,
+    required this.name,
+    List<String>? rooms,
+  }) : rooms = rooms ?? [];
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+        'rooms': rooms,
+      };
+
+  factory VaalmoHome.fromJson(Map<String, dynamic> json) {
+    return VaalmoHome(
+      id: json['id']?.toString() ?? '',
+      name: json['name']?.toString() ?? 'My Home',
+      rooms: List<String>.from(json['rooms'] ?? []),
+    );
+  }
+}
+
+// ============================================================
+// SMART DEVICE MODEL
+// ============================================================
+
+class SmartDevice {
+  String id;
+  String deviceUid;
+  String name;
+  String homeId;
+  String roomName;
+  int gangCount;
+
+  List<String> relayNames;
+  List<bool> relayStates;
+
+  String deviceType;
+  String connectionStatus;
+  String firmwareVersion;
+  String? lastSeen;
+
+  SmartDevice({
+    required this.id,
+    required this.deviceUid,
+    required this.name,
+    required this.homeId,
+    required this.roomName,
+    required this.gangCount,
+    required this.relayNames,
+    required this.relayStates,
+    this.deviceType = 'Wi-Fi Smart Switch',
+    this.connectionStatus = 'Not Connected',
+    this.firmwareVersion = 'Unknown',
+    this.lastSeen,
+  });
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'deviceUid': deviceUid,
+        'name': name,
+        'homeId': homeId,
+        'roomName': roomName,
+        'gangCount': gangCount,
+        'relayNames': relayNames,
+        'relayStates': relayStates,
+        'deviceType': deviceType,
+        'connectionStatus': connectionStatus,
+        'firmwareVersion': firmwareVersion,
+        'lastSeen': lastSeen,
+      };
+
+  factory SmartDevice.fromJson(Map<String, dynamic> json) {
+    final count = (json['gangCount'] as num?)?.toInt() ?? 1;
+    final safeCount = count > 0 ? count : 1;
+
+    final names = List<String>.from(json['relayNames'] ?? []);
+    final states = List<bool>.from(json['relayStates'] ?? []);
+
+    while (names.length < safeCount) {
+      names.add('Relay ${names.length + 1}');
+    }
+
+    while (states.length < safeCount) {
+      states.add(false);
+    }
+
+    final internalId = json['id']?.toString() ?? '';
+
+    return SmartDevice(
+      id: internalId,
+      deviceUid: json['deviceUid']?.toString() ?? 'VAALMO-$internalId',
+      name: json['name']?.toString() ?? 'Switch',
+      homeId: json['homeId']?.toString() ?? '',
+      roomName: json['roomName']?.toString() ?? '',
+      gangCount: safeCount,
+      relayNames: names.take(safeCount).toList(),
+      relayStates: states.take(safeCount).toList(),
+      deviceType:
+          json['deviceType']?.toString() ?? 'Wi-Fi Smart Switch',
+      connectionStatus:
+          json['connectionStatus']?.toString() ?? 'Not Connected',
+      firmwareVersion:
+          json['firmwareVersion']?.toString() ?? 'Unknown',
+      lastSeen: json['lastSeen']?.toString(),
+    );
+  }
+}
+
+// ============================================================
+// HOME SCREEN
+// ============================================================
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  List<VaalmoHome> homes = [];
+  List<SmartDevice> devices = [];
+
+  String? selectedHomeId;
+  bool isLoading = true;
+
+  VaalmoHome? get selectedHome {
+    for (final home in homes) {
+      if (home.id == selectedHomeId) return home;
+    }
+    return null;
+  }
+
+  String createId() => DateTime.now().microsecondsSinceEpoch.toString();
+
+  @override
+  void initState() {
+    super.initState();
+    loadData();
+  }
+
+  // ------------------------------------------------------------
+  // LOAD DATA AND MIGRATE OLD VERSION
+  // ------------------------------------------------------------
+
+  Future<void> loadData() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    final savedHomes = prefs.getStringList('vaalmoHomes');
+    final savedDevices = prefs.getStringList('devices');
+
+    final loadedHomes = <VaalmoHome>[];
+    final loadedDevices = <SmartDevice>[];
+
+    if (savedHomes != null) {
+      for (final entry in savedHomes) {
+        try {
+          loadedHomes.add(
+            VaalmoHome.fromJson(jsonDecode(entry)),
+          );
+        } catch (error) {
+          debugPrint('Could not load home: $error');
+        }
+      }
+    }
+
+    if (savedDevices != null) {
+      for (final entry in savedDevices) {
+        try {
+          loadedDevices.add(
+            SmartDevice.fromJson(jsonDecode(entry)),
+          );
+        } catch (error) {
+          debugPrint('Could not load device: $error');
+        }
+      }
+    }
+
+    final usedIds = <String>{};
+
+    loadedHomes.removeWhere((home) {
+      if (home.id.isEmpty || usedIds.contains(home.id)) {
+        return true;
+      }
+      usedIds.add(home.id);
+      return false;
+    });
+
+    if (loadedHomes.isEmpty) {
+      final oldHomeName = prefs.getString('homeName');
+      final oldRooms = prefs.getStringList('rooms') ?? [];
+
+      if (oldHomeName != null && oldHomeName.isNotEmpty) {
+        final migratedHome = VaalmoHome(
+          id: createId(),
+          name: oldHomeName,
+          rooms: oldRooms,
+        );
+
+        loadedHomes.add(migratedHome);
+
+        for (final device in loadedDevices) {
+          device.homeId = migratedHome.id;
+        }
+      }
+    }
+
+    if (loadedHomes.length == 1) {
+      for (final device in loadedDevices) {
+        if (device.homeId.isEmpty) {
+          device.homeId = loadedHomes.first.id;
+        }
+      }
+    }
+
+    String? savedSelection = prefs.getString('selectedHomeId');
+
+    if (loadedHomes.isNotEmpty) {
+      if (!loadedHomes.any((home) => home.id == savedSelection)) {
+        savedSelection = loadedHomes.first.id;
+      }
+    } else {
+      savedSelection = null;
+    }
+
+    if (!mounted) return;
+
+    setState(() {
+      homes = loadedHomes;
+      devices = loadedDevices;
+      selectedHomeId = savedSelection;
+      isLoading = false;
+    });
+
+    await saveData();
+  }
+
+  // ------------------------------------------------------------
+  // SAVE DATA
+  // ------------------------------------------------------------
+
+  Future<void> saveData() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    await prefs.setStringList(
+      'vaalmoHomes',
+      homes.map((home) => jsonEncode(home.toJson())).toList(),
+    );
+
+    await prefs.setString(
+      'selectedHomeId',
+      selectedHomeId ?? '',
+    );
+
+    await prefs.setStringList(
+      'devices',
+      devices.map((device) => jsonEncode(device.toJson())).toList(),
+    );
+
+    await prefs.remove('homeName');
+    await prefs.remove('rooms');
+  }
+
+  // ------------------------------------------------------------
+  // CREATE HOME
+  // ------------------------------------------------------------
+
+  Future<void> createHome() async {
+    final name = await showNameDialog(
+      context: context,
+      title: 'Add New Home',
+      label: 'Home name',
+      buttonText: 'Create',
+    );
+
+    if (!mounted || name == null || name.isEmpty) return;
+
+    final newHome = VaalmoHome(
+      id: createId(),
+      name: name,
+    );
+
+    setState(() {
+      homes.add(newHome);
+      selectedHomeId = newHome.id;
+    });
+
+    await saveData();
+  }
+
+  // ------------------------------------------------------------
+  // RENAME HOME
+  // ------------------------------------------------------------
+
+  Future<void> renameHome(VaalmoHome home) async {
+    final name = await showNameDialog(
+      context: context,
+      title: 'Rename Home',
+      label: 'Home name',
+      initialValue: home.name,
+    );
+
+    if (!mounted || name == null || name.isEmpty) return;
+
+    setState(() {
+      home.name = name;
+    });
+
+    await saveData();
+  }
+
+  // ------------------------------------------------------------
+  // DELETE HOME
+  // ------------------------------------------------------------
+
+  Future<void> deleteHome(VaalmoHome home) async {
+    final confirm = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('Delete Home?'),
+        content: Text(
+          'Delete "${home.name}" and all its rooms and devices?',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, false),
+            child: const Text('Cancel'),
+          ),
+          FilledButton(
+            style: FilledButton.styleFrom(backgroundColor: Colors.red),
+            onPressed: () => Navigator.pop(dialogContext, true),
+            child: const Text('Delete'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirm != true || !mounted) return;
+
+    setState(() {
+      homes.removeWhere((item) => item.id == home.id);
+      devices.removeWhere((item) => item.homeId == home.id);
+
+      if (selectedHomeId == home.id) {
+        selectedHomeId = homes.isNotEmpty ? homes.first.id : null;
+      }
+    });
+
+    await saveData();
+  }
+
+  // ------------------------------------------------------------
+  // CREATE ROOM
+  // ------------------------------------------------------------
+
+  Future<void> addRoom() async {
+    final home = selectedHome;
+    if (home == null) return;
+
+    final roomName = await showNameDialog(
+      context: context,
+      title: 'Add Room',
+      label: 'Room name',
+      buttonText: 'Add',
+    );
+
+    if (!mounted || roomName == null || roomName.isEmpty) return;
+
+    if (home.rooms.any(
+      (room) => room.toLowerCase() == roomName.toLowerCase(),
+    )) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Room already exists')),
+      );
+      return;
+    }
+
+    setState(() {
+      home.rooms.add(roomName);
+    });
+
+    await saveData();
+  }
+
+  // ------------------------------------------------------------
+  // RENAME ROOM
+  // ------------------------------------------------------------
+
+  Future<void> renameRoom(String oldName) async {
+    final home = selectedHome;
+    if (home == null) return;
+
+    final newName = await showNameDialog(
+      context: context,
+      title: 'Rename Room',
+      label: 'Room name',
+      initialValue: oldName,
+    );
+
+    if (!mounted ||
+        newName == null ||
+        newName.isEmpty ||
+        newName == oldName) {
+      return;
+    }
+
+    if (home.rooms.any(
+      (room) => room.toLowerCase() == newName.toLowerCase(),
+    )) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Room already exists')),
+      );
+      return;
+    }
+
+    setState(() {
+      final index = home.rooms.indexOf(oldName);
+
+      if (index != -1) {
+        home.rooms[index] = newName;
+      }
+
+      for (final device in devices) {
+        if (device.homeId == home.id && device.roomName == oldName) {
+          device.roomName = newName;
+        }
+      }
+    });
+
+    await saveData();
+  }
+
+  // ------------------------------------------------------------
+  // DELETE ROOM
+  // ------------------------------------------------------------
+
+  Future<void> deleteRoom(String roomName) async {
+    final home = selectedHome;
+    if (home == null) return;
+
+    final confirm = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('Delete Room?'),
+        content: Text('Delete "$roomName" and all devices inside it?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, false),
+            child: const Text('Cancel'),
+          ),
+          FilledButton(
+            style: FilledButton.styleFrom(backgroundColor: Colors.red),
+            onPressed: () => Navigator.pop(dialogContext, true),
+            child: const Text('Delete'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirm != true || !mounted) return;
+
+    setState(() {
+      home.rooms.remove(roomName);
+
+      devices.removeWhere(
+        (device) =>
+            device.homeId == home.id && device.roomName == roomName,
+      );
+    });
+
+    await saveData();
+  }
+
+  // ------------------------------------------------------------
+  // DEVICE OPERATIONS
+  // ------------------------------------------------------------
+
+  Future<void> addDevice(SmartDevice device) async {
+    setState(() {
+      devices.add(device);
+    });
+
+    await saveData();
+  }
+
+  Future<void> updateDevice(SmartDevice updatedDevice) async {
+    final index = devices.indexWhere(
+      (device) => device.id == updatedDevice.id,
+    );
+
+    if (index == -1) return;
+
+    setState(() {
+      devices[index] = updatedDevice;
+    });
+
+    await saveData();
+  }
+
+  Future<void> deleteDevice(String deviceId) async {
+    setState(() {
+      devices.removeWhere((device) => device.id == deviceId);
+    });
+
+    await saveData();
+  }
+
+  // ------------------------------------------------------------
+  // MAIN UI
+  // ------------------------------------------------------------
+
+  @override
+  Widget build(BuildContext context) {
+    if (isLoading) {
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    final home = selectedHome;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Vaalmo Controls'),
+        actions: [
+          if (home != null)
+            IconButton(
+              tooltip: 'Rename Home',
+              icon: const Icon(Icons.edit_outlined),
+              onPressed: () => renameHome(home),
+            ),
+          if (home != null)
+            IconButton(
+              tooltip: 'Delete Home',
+              icon: const Icon(Icons.delete_outline),
+              onPressed: () => deleteHome(home),
+            ),
+        ],
+      ),
+      body: home == null ? _buildEmptyHomes() : _buildHomeDashboard(home),
+      floatingActionButton: home != null
+          ? FloatingActionButton.extended(
+              onPressed: addRoom,
+              icon: const Icon(Icons.add),
+              label: const Text('Add Room'),
+            )
+          : null,
+    );
+  }
+
+  // ------------------------------------------------------------
+  // EMPTY HOMES
+  // ------------------------------------------------------------
+
+  Widget _buildEmptyHomes() {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(
+              Icons.home_outlined,
+              size: 90,
+              color: Colors.teal,
+            ),
+            const SizedBox(height: 16),
+            const Text(
+              'Welcome to Vaalmo Controls',
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 8),
+            const Text(
+              'Create a home to get started.',
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 24),
+            FilledButton.icon(
+              onPressed: createHome,
+              icon: const Icon(Icons.add_home),
+              label: const Text('Add Your First Home'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // ------------------------------------------------------------
+  // HOME DASHBOARD
+  // ------------------------------------------------------------
+
+  Widget _buildHomeDashboard(VaalmoHome home) {
+    final homeDevices = devices
+        .where((device) => device.homeId == home.id)
+        .toList();
+
+    final totalRelays = homeDevices.fold<int>(
+      0,
+      (sum, device) => sum + device.gangCount,
+    );
+
+    final activeRelays = homeDevices.fold<int>(
+      0,
+      (sum, device) =>
+          sum + device.relayStates.where((state) => state).length,
+    );
+
+    final dropdownValue = homes.any((item) => item.id == selectedHomeId)
+        ? selectedHomeId
+        : homes.first.id;
+
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+          child: Row(
+            children: [
+              Expanded(
+                child: DropdownButtonFormField<String>(
+                  key: ValueKey(dropdownValue),
+                  initialValue: dropdownValue,
+                  decoration: const InputDecoration(
+                    labelText: 'Select Home',
+                    border: OutlineInputBorder(),
+                  ),
+                  items: homes.map((item) {
+                    return DropdownMenuItem<String>(
+                      value: item.id,
+                      child: Text(item.name),
+                    );
+                  }).toList(),
+                  onChanged: (value) async {
+                    if (value == null) return;
+
+                    setState(() {
+                      selectedHomeId = value;
+                    });
+
+                    await saveData();
+                  },
+                ),
+              ),
+              const SizedBox(width: 8),
+              IconButton.filled(
+                tooltip: 'Add Home',
+                onPressed: createHome,
+                icon: const Icon(Icons.add_home),
+              ),
+            ],
+          ),
+        ),
+        Card(
+          margin: const EdgeInsets.all(16),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              children: [
+                const Icon(Icons.home, size: 40, color: Colors.teal),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        home.name,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text('${home.rooms.length} rooms'),
+                      Text('${homeDevices.length} switches'),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Card(
+          margin: const EdgeInsets.symmetric(horizontal: 16),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Relay Overview',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 12),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text('Active Relays'),
+                    Text('$activeRelays / $totalRelays'),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                LinearProgressIndicator(
+                  value: totalRelays == 0 ? 0 : activeRelays / totalRelays,
+                  minHeight: 8,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Expanded(
+          child: home.rooms.isEmpty
+              ? _buildEmptyRooms()
+              : ListView.builder(
+                  padding: const EdgeInsets.all(16),
+                  itemCount: home.rooms.length,
+                  itemBuilder: (context, index) {
+                    final roomName = home.rooms[index];
+
+                    final roomDevices = devices
+                        .where(
+                          (device) =>
+                              device.homeId == home.id &&
+                              device.roomName == roomName,
+                        )
+                        .toList();
+
+                    final roomRelayCount = roomDevices.fold<int>(
+                      0,
+                      (sum, device) => sum + device.gangCount,
+                    );
+
+                    final roomActiveCount = roomDevices.fold<int>(
+                      0,
+                      (sum, device) =>
+                          sum +
+                          device.relayStates.where((state) => state).length,
+                    );
+
+                    return Card(
+                      child: ListTile(
+                        leading: const CircleAvatar(
+                          child: Icon(Icons.meeting_room_outlined),
+                        ),
+                        title: Text(roomName),
+                        subtitle: Text(
+                          '${roomDevices.length} switches • '
+                          '$roomActiveCount/$roomRelayCount relays ON',
+                        ),
+                        trailing: PopupMenuButton<String>(
+                          onSelected: (value) {
+                            if (value == 'rename') {
+                              renameRoom(roomName);
+                            } else if (value == 'delete') {
+                              deleteRoom(roomName);
+                            }
+                          },
+                          itemBuilder: (context) => [
+                            const PopupMenuItem(
+                              value: 'rename',
+                              child: Row(
+                                children: [
+                                  Icon(Icons.edit_outlined),
+                                  SizedBox(width: 8),
+                                  Text('Rename Room'),
+                                ],
+                              ),
+                            ),
+                            const PopupMenuItem(
+                              value: 'delete',
+                              child: Row(
+                                children: [
+                                  Icon(Icons.delete_outline),
+                                  SizedBox(width: 8),
+                                  Text('Delete Room'),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => RoomDetailsScreen(
+                                homeId: home.id,
+                                roomName: roomName,
+                                devices: devices,
+                                onAddDevice: addDevice,
+                                onUpdateDevice: updateDevice,
+                                onDeleteDevice: deleteDevice,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  },
+                ),
+        ),
+      ],
+    );
+  }
+
+  // ------------------------------------------------------------
+  // EMPTY ROOMS
+  // ------------------------------------------------------------
+
+  Widget _buildEmptyRooms() {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(
+              Icons.meeting_room_outlined,
+              size: 70,
+              color: Colors.teal,
+            ),
+            const SizedBox(height: 16),
+            const Text(
+              'No rooms added yet',
+              style: TextStyle(fontSize: 18),
+            ),
+            const SizedBox(height: 8),
+            const Text(
+              'Add rooms to organize your switches.',
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 16),
+            FilledButton.icon(
+              onPressed: addRoom,
+              icon: const Icon(Icons.add),
+              label: const Text('Add Room'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ============================================================
+// ROOM DETAILS
+// ============================================================
+
+class RoomDetailsScreen extends StatefulWidget {
+  final String homeId;
+  final String roomName;
+  final List<SmartDevice> devices;
+
+  final Future<void> Function(SmartDevice) onAddDevice;
+  final Future<void> Function(SmartDevice) onUpdateDevice;
+  final Future<void> Function(String) onDeleteDevice;
+
+  const RoomDetailsScreen({
+    super.key,
+    required this.homeId,
+    required this.roomName,
+    required this.devices,
+    required this.onAddDevice,
+    required this.onUpdateDevice,
+    required this.onDeleteDevice,
+  });
+
+  @override
+  State<RoomDetailsScreen> createState() => _RoomDetailsScreenState();
+}
+
+class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
+  List<SmartDevice> get roomDevices {
+    return widget.devices
+        .where(
+          (device) =>
+              device.homeId == widget.homeId &&
+              device.roomName == widget.roomName,
+        )
+        .toList();
+  }
+
+  Future<void> addSwitch() async {
+    final newDevice = await Navigator.push<SmartDevice>(
+      context,
+      MaterialPageRoute(
+        builder: (context) => AddDeviceScreen(
+          homeId: widget.homeId,
+          roomName: widget.roomName,
+        ),
+      ),
+    );
+
+    if (newDevice != null) {
+      await widget.onAddDevice(newDevice);
+      if (mounted) setState(() {});
+    }
+  }
+
+  Future<void> openDevice(SmartDevice device) async {
+    final deletedId = await Navigator.push<String>(
+      context,
+      MaterialPageRoute(
+        builder: (context) => DeviceControlScreen(
+          device: device,
+          onUpdate: widget.onUpdateDevice,
+        ),
+      ),
+    );
+
+    if (deletedId != null) {
+      await widget.onDeleteDevice(deletedId);
+    }
+
+    if (mounted) setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final currentDevices = roomDevices;
+
+    return Scaffold(
+      appBar: AppBar(title: Text(widget.roomName)),
+      body: currentDevices.isEmpty
+          ? Center(
+              child: Padding(
+                padding: const EdgeInsets.all(24),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(
+                      Icons.power_outlined,
+                      size: 80,
+                      color: Colors.teal,
+                    ),
+                    const SizedBox(height: 16),
+                    const Text(
+                      'No switches in this room',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    const SizedBox(height: 16),
+                    FilledButton.icon(
+                      onPressed: addSwitch,
+                      icon: const Icon(Icons.add),
+                      label: const Text('Add Switch'),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          : ListView.builder(
+              padding: const EdgeInsets.all(16),
+              itemCount: currentDevices.length,
+              itemBuilder: (context, index) {
+                final device = currentDevices[index];
+                final activeCount =
+                    device.relayStates.where((state) => state).length;
+
+                return Card(
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      backgroundColor:
+                          activeCount > 0 ? Colors.teal : Colors.grey,
+                      child: const Icon(Icons.power),
+                    ),
+                    title: Text(device.name),
+                    subtitle: Text(
+                      '${device.gangCount} gang • '
+                      '$activeCount relays ON\n'
+                      '${device.deviceUid}',
+                    ),
+                    isThreeLine: true,
+                    trailing: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(Icons.chevron_right),
+                        Text(
+                          device.connectionStatus,
+                          style: const TextStyle(fontSize: 10),
+                        ),
+                      ],
+                    ),
+                    onTap: () => openDevice(device),
+                  ),
+                );
+              },
+            ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: addSwitch,
+        icon: const Icon(Icons.add),
+        label: const Text('Add Switch'),
+      ),
+    );
+  }
+}
+
+// ============================================================
+// ADD DEVICE
+// ============================================================
+
+class AddDeviceScreen extends StatefulWidget {
+  final String homeId;
+  final String roomName;
+
+  const AddDeviceScreen({
+    super.key,
+    required this.homeId,
+    required this.roomName,
+  });
+
+  @override
+  State<AddDeviceScreen> createState() => _AddDeviceScreenState();
+}
+
+class _AddDeviceScreenState extends State<AddDeviceScreen> {
+  final TextEditingController nameController = TextEditingController();
+  int selectedGangCount = 1;
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    super.dispose();
+  }
+
+  void createDevice() {
+    final name = nameController.text.trim();
+
+    if (name.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Enter a switch name')),
+      );
+      return;
+    }
+
+    final id = DateTime.now().microsecondsSinceEpoch.toString();
+
+    final device = SmartDevice(
+      id: id,
+      deviceUid: 'VAALMO-$id',
+      name: name,
+      homeId: widget.homeId,
+      roomName: widget.roomName,
+      gangCount: selectedGangCount,
+      relayNames: List.generate(
+        selectedGangCount,
+        (index) => 'Relay ${index + 1}',
+      ),
+      relayStates: List.generate(selectedGangCount, (_) => false),
+    );
+
+    Navigator.pop(context, device);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Add Switch')),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: ListView(
+          children: [
+            TextField(
+              controller: nameController,
+              autofocus: true,
+              decoration: const InputDecoration(
+                labelText: 'Switch name',
+                hintText: 'e.g. Living Room Switch',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 24),
+            const Text(
+              'Select Switch Type',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 12),
+            ...[1, 2, 4].map((gang) {
+              return Card(
+                child: RadioListTile<int>(
+                  value: gang,
+                  groupValue: selectedGangCount,
+                  title: Text('$gang-Gang Switch'),
+                  subtitle: Text(
+                    '$gang independent relay${gang > 1 ? 's' : ''}',
+                  ),
+                  secondary: Icon(
+                    Icons.power,
+                    color: selectedGangCount == gang ? Colors.teal : null,
+                  ),
+                  onChanged: (value) {
+                    if (value != null) {
+                      setState(() {
+                        selectedGangCount = value;
+                      });
+                    }
+                  },
+                ),
+              );
+            }),
+            const SizedBox(height: 24),
+            FilledButton.icon(
+              onPressed: createDevice,
+              icon: const Icon(Icons.add),
+              label: const Text('Create Switch'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ============================================================
+// DEVICE CONTROL
+// ============================================================
+
+class DeviceControlScreen extends StatefulWidget {
+  final SmartDevice device;
+  final Future<void> Function(SmartDevice) onUpdate;
+
+  const DeviceControlScreen({
+    super.key,
+    required this.device,
+    required this.onUpdate,
+  });
+
+  @override
+  State<DeviceControlScreen> createState() => _DeviceControlScreenState();
+}
+
+class _DeviceControlScreenState extends State<DeviceControlScreen> {
+  late SmartDevice device;
+
+  @override
+  void initState() {
+    super.initState();
+    device = widget.device;
+  }
+
+  Future<void> persist() async {
+    await widget.onUpdate(device);
+  }
+
+  // ------------------------------------------------------------
+  // RENAME SWITCH
+  // ------------------------------------------------------------
+
+  Future<void> renameSwitch() async {
+    final name = await showNameDialog(
+      context: context,
+      title: 'Rename Switch',
+      label: 'Switch name',
+      initialValue: device.name,
+    );
+
+    if (!mounted || name == null || name.isEmpty) return;
+
+    setState(() {
+      device.name = name;
+    });
+
+    await persist();
+  }
+
+  // ------------------------------------------------------------
+  // RENAME RELAY
+  // ------------------------------------------------------------
+
+  Future<void> renameRelay(int index) async {
+    final name = await showNameDialog(
+      context: context,
+      title: 'Rename ${device.relayNames[index]}',
+      label: 'Relay name',
+      initialValue: device.relayNames[index],
+    );
+
+    if (!mounted || name == null || name.isEmpty) return;
+
+    setState(() {
+      device.relayNames[index] = name;
+    });
+
+    await persist();
+  }
+
+  // ------------------------------------------------------------
+  // RELAY TOGGLE
+  // ------------------------------------------------------------
+
+  Future<void> toggleRelay(int index, bool value) async {
+    setState(() {
+      device.relayStates[index] = value;
+    });
+
+    await persist();
+  }
+
+  // ------------------------------------------------------------
+  // DELETE SWITCH
+  // ------------------------------------------------------------
+
+  Future<void> deleteSwitch() async {
+    final confirm = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('Delete Switch?'),
+        content: Text('Delete "${device.name}"?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, false),
+            child: const Text('Cancel'),
+          ),
+          FilledButton(
+            style: FilledButton.styleFrom(backgroundColor: Colors.red),
+            onPressed: () => Navigator.pop(dialogContext, true),
+            child: const Text('Delete'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirm != true || !mounted) return;
+
+    Navigator.pop(context, device.id);
+  }
+
+  // ------------------------------------------------------------
+  // DEVICE SETTINGS
+  // ------------------------------------------------------------
+
+  Future<void> openDeviceSettings() async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => DeviceSettingsScreen(
+          device: device,
+          onUpdate: (updatedDevice) async {
+            if (!mounted) return;
+
+            setState(() {
+              device = updatedDevice;
+            });
+
+            await persist();
+          },
+        ),
+      ),
+    );
+
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
+  // ------------------------------------------------------------
+  // UI
+  // ------------------------------------------------------------
+
+  @override
+  Widget build(BuildContext context) {
+    final activeCount =
+        device.relayStates.where((state) => state).length;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(device.name),
+        actions: [
+          IconButton(
+            tooltip: 'Device Settings',
+            icon: const Icon(Icons.settings_outlined),
+            onPressed: openDeviceSettings,
+          ),
+          PopupMenuButton<String>(
+            onSelected: (value) {
+              if (value == 'rename') {
+                renameSwitch();
+              } else if (value == 'delete') {
+                deleteSwitch();
+              }
+            },
+            itemBuilder: (context) => [
+              const PopupMenuItem(
+                value: 'rename',
+                child: Text('Rename Switch'),
+              ),
+              const PopupMenuItem(
+                value: 'delete',
+                child: Text('Delete Switch'),
+              ),
+            ],
+          ),
+        ],
+      ),
+      body: ListView(
+        padding: const EdgeInsets.all(16),
+        children: [
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                children: [
+                  Icon(
+                    activeCount > 0 ? Icons.power : Icons.power_outlined,
+                    size: 60,
+                    color: activeCount > 0 ? Colors.teal : Colors.grey,
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    device.name,
+                    style: const TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text('$activeCount / ${device.gangCount} Relays ON'),
+                  const SizedBox(height: 16),
+                  LinearProgressIndicator(
+                    value: device.gangCount == 0
+                        ? 0
+                        : activeCount / device.gangCount,
+                    minHeight: 8,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+          ...List.generate(device.gangCount, (index) {
+            final isOn = device.relayStates[index];
+
+            return Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        CircleAvatar(
+                          backgroundColor: isOn ? Colors.teal : Colors.grey,
+                          child: Icon(
+                            isOn
+                                ? Icons.lightbulb
+                                : Icons.lightbulb_outline,
+                            color: Colors.white,
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                device.relayNames[index],
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(isOn ? 'ON' : 'OFF'),
+                            ],
+                          ),
+                        ),
+                        IconButton(
+                          tooltip: 'Rename Relay',
+                          icon: const Icon(Icons.edit_outlined),
+                          onPressed: () => renameRelay(index),
+                        ),
+                        Switch(
+                          value: isOn,
+                          onChanged: (value) => toggleRelay(index, value),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    SizedBox(
+                      width: double.infinity,
+                      child: FilledButton.tonal(
+                        onPressed: () => toggleRelay(index, !isOn),
+                        child: Text(isOn ? 'Turn OFF' : 'Turn ON'),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }),
+          const SizedBox(height: 16),
+          Card(
+            color: Colors.orange.withOpacity(0.12),
+            child: const Padding(
+              padding: EdgeInsets.all(16),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(Icons.info_outline, color: Colors.orange),
+                  SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      'Simulation Mode\n'
+                      'These relay controls currently operate locally '
+                      'inside the app. No physical switch is connected yet.',
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ============================================================
+// DEVICE SETTINGS SCREEN
+// ============================================================
+
+class DeviceSettingsScreen extends StatefulWidget {
+  final SmartDevice device;
+  final Future<void> Function(SmartDevice) onUpdate;
+
+  const DeviceSettingsScreen({
+    super.key,
+    required this.device,
+    required this.onUpdate,
+  });
+
+  @override
+  State<DeviceSettingsScreen> createState() =>
+      _DeviceSettingsScreenState();
+}
+
+class _DeviceSettingsScreenState extends State<DeviceSettingsScreen> {
+  late SmartDevice device;
+
+  @override
+  void initState() {
+    super.initState();
+    device = widget.device;
+  }
+
+  Future<void> updateDevice() async {
+    await widget.onUpdate(device);
+
+    if (!mounted) return;
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Device information saved')),
+    );
+  }
+
+  // ------------------------------------------------------------
+  // RENAME DEVICE - FIXED
+  // ------------------------------------------------------------
+
+  Future<void> renameDevice() async {
+    final name = await showNameDialog(
+      context: context,
+      title: 'Rename Device',
+      label: 'Device name',
+      initialValue: device.name,
+    );
+
+    if (!mounted || name == null || name.isEmpty) return;
+
+    setState(() {
+      device.name = name;
+    });
+
+    await updateDevice();
+  }
+
+  // ------------------------------------------------------------
+  // DEVICE INFORMATION ROW
+  // ------------------------------------------------------------
+
+  Widget informationRow(String title, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Text(
+              title,
+              style: TextStyle(color: Colors.grey.shade400),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              value,
+              textAlign: TextAlign.end,
+              style: const TextStyle(fontWeight: FontWeight.w600),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ------------------------------------------------------------
+  // UI
+  // ------------------------------------------------------------
+
+  @override
+  Widget build(BuildContext context) {
+    final statusColor = device.connectionStatus == 'Online'
+        ? Colors.green
+        : device.connectionStatus == 'Offline'
+            ? Colors.red
+            : Colors.orange;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Device Settings'),
+      ),
+      body: ListView(
+        padding: const EdgeInsets.all(16),
+        children: [
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                children: [
+                  const Icon(
+                    Icons.developer_board_outlined,
+                    size: 64,
+                    color: Colors.teal,
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    device.name,
+                    style: const TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.circle,
+                        size: 12,
+                        color: statusColor,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        device.connectionStatus,
+                        style: TextStyle(
+                          color: statusColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Device Information',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const Divider(height: 24),
+                  informationRow('Device Name', device.name),
+                  const Divider(height: 1),
+                  informationRow('Device UID', device.deviceUid),
+                  const Divider(height: 1),
+                  informationRow('Device Type', device.deviceType),
+                  const Divider(height: 1),
+                  informationRow('Gang Count', '${device.gangCount} Gang'),
+                  const Divider(height: 1),
+                  informationRow('Home ID', device.homeId),
+                  const Divider(height: 1),
+                  informationRow('Room', device.roomName),
+                  const Divider(height: 1),
+                  informationRow('Firmware', device.firmwareVersion),
+                  const Divider(height: 1),
+                  informationRow(
+                    'Last Seen',
+                    device.lastSeen ?? 'Not available',
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+          Card(
+            child: Column(
+              children: [
+                ListTile(
+                  leading: const Icon(Icons.edit_outlined),
+                  title: const Text('Rename Device'),
+                  subtitle: const Text('Change the device display name'),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: renameDevice,
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+          Card(
+            color: Colors.orange.withOpacity(0.12),
+            child: const Padding(
+              padding: EdgeInsets.all(16),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(Icons.info_outline, color: Colors.orange),
+                  SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      'Device information is currently simulated. '
+                      'Connection status and firmware details will be '
+                      'provided by the ESP32 hardware after integration.',
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+in this code I want to enhance the features such as a status of the home should show as offline until the devices are connected to it is becomes communicatable and once the devices are connected successfully then it should become online status and there should also be a Internet signal that only wifi is allowed and a SSID and password should be asked when a user logs in and the signal strength should be also shown near the home name and the signal strength should be shown as red for very low, orange for medium and green for  very high connection strength 
+
+there should be a user authentication based login in front and once the user logins then only the home creation should be asked as of now add phone number and otp based authentication
